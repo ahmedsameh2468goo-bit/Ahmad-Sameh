@@ -21,6 +21,8 @@ export const Header: React.FC = () => {
   const location = useLocation();
   const { data } = useData();
 
+  const displayName = data.global_settings.displayName || 'أحمد سامح';
+
   const navLinks = [
     { name: 'الرئيسية', path: '/', icon: Home },
     { name: 'الخدمات', path: '/services', icon: Layers },
@@ -50,13 +52,13 @@ export const Header: React.FC = () => {
                 {data.global_settings.heroImage ? (
                   <img
                     src={data.global_settings.heroImage}
-                    alt="Ahmed Sameh"
+                    alt={displayName}
                     className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"
                   />
                 ) : (
-                  <span className="font-extrabold text-lg text-blue-600 tracking-tighter">
-                    AS
+                  <span className="font-extrabold text-sm sm:text-base text-blue-600 tracking-tighter">
+                    {displayName.slice(0, 2)}
                   </span>
                 )}
               </div>
@@ -65,7 +67,7 @@ export const Header: React.FC = () => {
 
             <div className="flex flex-col">
               <span className="font-black text-xl text-slate-900 tracking-tight leading-tight group-hover:text-blue-600 transition-colors">
-                Ahmed Sameh
+                {displayName}
               </span>
               <span className="text-[11px] font-semibold text-slate-500 flex items-center gap-1">
                 <Sparkles className="w-3 h-3 text-amber-500" />
@@ -103,7 +105,7 @@ export const Header: React.FC = () => {
           <div className="hidden lg:flex items-center gap-3">
             {data.global_settings.whatsapp && (
               <a
-                href={generateWhatsAppUrl(data.global_settings.whatsapp, 'مرحباً أحمد، أود التواصل معك بخصوص مشروع')}
+                href={generateWhatsAppUrl(data.global_settings.whatsapp, `مرحباً ${displayName}، أود التواصل معك بخصوص مشروع`)}
                 target="_blank"
                 rel="noopener noreferrer"
                 id="header-whatsapp-cta"
@@ -182,7 +184,7 @@ export const Header: React.FC = () => {
             {data.global_settings.whatsapp && (
               <div className="pt-3 border-t border-slate-100 mt-2">
                 <a
-                  href={generateWhatsAppUrl(data.global_settings.whatsapp, 'مرحباً أحمد، أود التواصل معك')}
+                  href={generateWhatsAppUrl(data.global_settings.whatsapp, `مرحباً ${displayName}، أود التواصل معك`)}
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={closeMobileMenu}

@@ -6,6 +6,7 @@ import { generateWhatsAppUrl } from '../utils/validators';
 
 export const Footer: React.FC = () => {
   const { data } = useData();
+  const displayName = data.global_settings.displayName || 'أحمد سامح';
   const currentYear = new Date().getFullYear();
 
   return (
@@ -19,10 +20,10 @@ export const Footer: React.FC = () => {
           {/* Brand Col */}
           <div className="md:col-span-5 space-y-4">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-extrabold text-lg shadow-sm">
-                AS
+              <div className="w-10 h-10 rounded-xl bg-blue-600 flex items-center justify-center text-white font-extrabold text-sm sm:text-base shadow-sm">
+                {displayName.slice(0, 2)}
               </div>
-              <span className="text-xl font-black text-slate-900">Ahmed Sameh</span>
+              <span className="text-xl font-black text-slate-900">{displayName}</span>
             </div>
             <p className="text-sm text-slate-500 leading-relaxed max-w-sm">
               {data.global_settings.bio || 'لا يوجد حالياً'}
@@ -84,7 +85,7 @@ export const Footer: React.FC = () => {
 
               {data.global_settings.whatsapp && (
                 <a
-                  href={generateWhatsAppUrl(data.global_settings.whatsapp, 'مرحباً أحمد')}
+                  href={generateWhatsAppUrl(data.global_settings.whatsapp, `مرحباً ${displayName}`)}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex items-center gap-2.5 p-2 rounded-xl bg-slate-50 hover:bg-emerald-50 text-slate-700 hover:text-emerald-600 transition-colors border border-slate-100"
@@ -112,7 +113,7 @@ export const Footer: React.FC = () => {
 
         {/* Copyright Bar */}
         <div className="mt-12 pt-6 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-400">
-          <p>© {currentYear} Ahmed Sameh. جميع الحقوق محفوظة.</p>
+          <p>© {currentYear} {displayName}. جميع الحقوق محفوظة.</p>
           <p className="flex items-center gap-1">
             <span>صُنِع بشغف وإتقان</span>
             <Heart className="w-3.5 h-3.5 text-rose-500 fill-rose-500" />

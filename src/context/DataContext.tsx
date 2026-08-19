@@ -17,6 +17,7 @@ const ROW_ID = 'default';
 
 export const INITIAL_DATA: AppDataState = {
   global_settings: {
+    displayName: 'أحمد سامح',
     heroImage: '',
     bio: 'صانع محتوى ومطور شغوف بالتقنية والذكاء الاصطناعي وصناعة التجارب الرقمية المميزة وتصميم الأفكار الإبداعية.',
     whatsapp: '201000000000',

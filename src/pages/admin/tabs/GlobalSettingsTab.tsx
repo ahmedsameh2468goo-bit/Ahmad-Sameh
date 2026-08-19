@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Settings, Save, Mail, MessageCircle, FileText, CheckCircle2 } from 'lucide-react';
+import { Settings, Save, Mail, MessageCircle, FileText, CheckCircle2, User } from 'lucide-react';
 import { useData } from '../../../context/DataContext';
 import { useToast } from '../../../context/ToastContext';
 import { ImageUploader } from '../../../components/ImageUploader';
@@ -10,6 +10,7 @@ export const GlobalSettingsTab: React.FC = () => {
   const toast = useToast();
 
   const [formData, setFormData] = useState({
+    displayName: data.global_settings.displayName || 'أحمد سامح',
     heroImage: data.global_settings.heroImage || '',
     bio: data.global_settings.bio || '',
     whatsapp: data.global_settings.whatsapp || '',
@@ -51,6 +52,7 @@ export const GlobalSettingsTab: React.FC = () => {
 
     setErrors({});
     updateGlobalSettings({
+      displayName: formData.displayName.trim() || 'أحمد سامح',
       heroImage: formData.heroImage,
       bio: formData.bio,
       whatsapp: sanitizedPhone,
@@ -68,12 +70,34 @@ export const GlobalSettingsTab: React.FC = () => {
           <span>الإعدادات العامة والملف الشخصي</span>
         </h2>
         <p className="text-sm text-slate-500 mt-1">
-          إدارة الصورة الشخصية، النبذة التعريفية، ومعلومات التواصل الرئيسية
+          إدارة الاسم الظاهر، الصورة الشخصية، النبذة التعريفية، ومعلومات التواصل الرئيسية
         </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-8 bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xs">
-        {/* 1. Direct Image Uploader */}
+        {/* 1. Display Name Input */}
+        <div className="space-y-2 pb-6 border-b border-slate-100">
+          <label
+            htmlFor="admin-display-name-input"
+            className="text-sm font-bold text-slate-800 flex items-center gap-2"
+          >
+            <User className="w-4 h-4 text-blue-600" />
+            <span>الاسم الظاهر (في الهيدر والموقع) / Display Name</span>
+          </label>
+          <input
+            id="admin-display-name-input"
+            type="text"
+            value={formData.displayName}
+            onChange={(e) => setFormData({ ...formData, displayName: e.target.value })}
+            placeholder="أدخل الاسم الجديد (مثال: أحمد سامح)"
+            className="w-full p-3.5 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:bg-white rounded-xl text-slate-900 text-sm font-bold focus:outline-hidden transition-all shadow-2xs"
+          />
+          <span className="text-xs text-slate-400">
+            هذا الاسم سيظهر فوراً في الهيدر، الفوتر، والصفحة الرئيسية وكافة أرجاء الموقع بمجرد الحفظ.
+          </span>
+        </div>
+
+        {/* 2. Direct Image Uploader */}
         <div className="pb-6 border-b border-slate-100">
           <ImageUploader
             currentImage={formData.heroImage}
@@ -82,7 +106,7 @@ export const GlobalSettingsTab: React.FC = () => {
           />
         </div>
 
-        {/* 2. Main Bio */}
+        {/* 3. Main Bio */}
         <div className="space-y-2">
           <label
             htmlFor="admin-bio-input"
@@ -104,7 +128,7 @@ export const GlobalSettingsTab: React.FC = () => {
           </span>
         </div>
 
-        {/* 3. Contact Details Grid */}
+        {/* 4. Contact Details Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pt-4 border-t border-slate-100">
           {/* WhatsApp */}
           <div className="space-y-2">

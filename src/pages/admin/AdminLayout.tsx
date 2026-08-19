@@ -30,7 +30,8 @@ import { BackupTab } from './tabs/BackupTab';
 
 export const AdminLayout: React.FC = () => {
   const { isAuthenticated, logout } = useAuth();
-  const { cloudSyncStatus, isCloudSyncing, syncWithCloud, lastSyncedAt } = useData();
+  const { data, cloudSyncStatus, isCloudSyncing, syncWithCloud, lastSyncedAt } = useData();
+  const displayName = data.global_settings.displayName || 'أحمد سامح';
   const navigate = useNavigate();
   const toast = useToast();
 
@@ -108,11 +109,11 @@ export const AdminLayout: React.FC = () => {
           {/* Admin Header / User profile badge */}
           <div className="flex items-center justify-between pb-6 border-b border-slate-100">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-xl bg-blue-600 text-white font-extrabold flex items-center justify-center shadow-md shadow-blue-600/20">
-                AS
+              <div className="w-10 h-10 rounded-xl bg-blue-600 text-white font-extrabold text-xs sm:text-sm flex items-center justify-center shadow-md shadow-blue-600/20">
+                {displayName.slice(0, 2)}
               </div>
               <div>
-                <h1 className="font-bold text-slate-900 text-sm">Ahmed Sameh</h1>
+                <h1 className="font-bold text-slate-900 text-sm">{displayName}</h1>
                 <span className="text-[11px] font-semibold text-emerald-600 flex items-center gap-1">
                   <UserCheck className="w-3 h-3" />
                   <span>مشرف مسجل</span>

@@ -1,4 +1,5 @@
 export interface GlobalSettings {
+  displayName?: string; // Display name shown across the site
   heroImage: string; // Base64 Data URL or empty
   bio: string;
   whatsapp: string;

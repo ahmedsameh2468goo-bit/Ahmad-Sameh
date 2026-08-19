@@ -18,6 +18,7 @@ import { EmptyFallback } from '../components/EmptyFallback';
 
 export const HomePage: React.FC = () => {
   const { data } = useData();
+  const displayName = data.global_settings.displayName || 'أحمد سامح';
 
   const activeServices = data.services.filter((s) => s.isVisible);
 
@@ -41,17 +42,17 @@ export const HomePage: React.FC = () => {
                 {data.global_settings.heroImage ? (
                   <img
                     src={data.global_settings.heroImage}
-                    alt="Ahmed Sameh"
+                    alt={displayName}
                     className="w-full h-full object-cover"
                     referrerPolicy="no-referrer"
                   />
                 ) : (
                   <div className="w-full h-full bg-slate-100 flex flex-col items-center justify-center text-slate-400 p-4">
                     <span className="text-4xl sm:text-5xl font-black text-blue-600 tracking-tight">
-                      AS
+                      {displayName.slice(0, 2)}
                     </span>
-                    <span className="text-[10px] text-slate-500 font-semibold mt-1">
-                      Ahmed Sameh
+                    <span className="text-[11px] text-slate-500 font-semibold mt-1">
+                      {displayName}
                     </span>
                   </div>
                 )}
@@ -78,7 +79,7 @@ export const HomePage: React.FC = () => {
             transition={{ delay: 0.1, duration: 0.4 }}
             className="text-4xl sm:text-6xl font-black text-slate-900 tracking-tight mb-4"
           >
-            Ahmed Sameh
+            {displayName}
           </motion.h1>
 
           {/* Dynamic Bio */}
@@ -106,7 +107,7 @@ export const HomePage: React.FC = () => {
               <a
                 href={generateWhatsAppUrl(
                   data.global_settings.whatsapp,
-                  'مرحباً أحمد، أود بدء محادثة معك بخصوص مشروع'
+                  `مرحباً ${displayName}، أود بدء محادثة معك بخصوص مشروع`
                 )}
                 target="_blank"
                 rel="noopener noreferrer"
@@ -178,7 +179,7 @@ export const HomePage: React.FC = () => {
                   <a
                     href={generateWhatsAppUrl(
                       data.global_settings.whatsapp,
-                      `مرحباً أحمد، أود الاستفسار عن خدمة: ${service.title}`
+                      `مرحباً ${displayName}، أود الاستفسار عن خدمة: ${service.title}`
                     )}
                     target="_blank"
                     rel="noopener noreferrer"
@@ -224,7 +225,7 @@ export const HomePage: React.FC = () => {
               <a
                 href={generateWhatsAppUrl(
                   data.global_settings.whatsapp,
-                  'مرحباً أحمد، أود التحدث معك حول مشروع جديد'
+                  `مرحباً ${displayName}، أود التحدث معك حول مشروع جديد`
                 )}
                 target="_blank"
                 rel="noopener noreferrer"

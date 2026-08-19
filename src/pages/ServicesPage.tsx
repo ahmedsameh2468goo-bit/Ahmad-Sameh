@@ -7,6 +7,7 @@ import { EmptyFallback } from '../components/EmptyFallback';
 
 export const ServicesPage: React.FC = () => {
   const { data } = useData();
+  const displayName = data.global_settings.displayName || 'أحمد سامح';
 
   const visibleServices = data.services.filter((s) => s.isVisible);
   const topics = data.topics_of_interest;
@@ -73,7 +74,7 @@ export const ServicesPage: React.FC = () => {
                   <a
                     href={generateWhatsAppUrl(
                       data.global_settings.whatsapp,
-                      `مرحباً أحمد، أود الاستفسار وطلب خدمة: ${service.title}`
+                      `مرحباً ${displayName}، أود الاستفسار وطلب خدمة: ${service.title}`
                     )}
                     target="_blank"
                     rel="noopener noreferrer"
