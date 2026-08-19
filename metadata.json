@@ -1,0 +1,8 @@
+{
+  "name": " Ahmad Sameh",
+  "description": "الموقع والملف التعريفي الرسمي لأحمد سامح - معرض الأعمال والخدمات والتواصل",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
