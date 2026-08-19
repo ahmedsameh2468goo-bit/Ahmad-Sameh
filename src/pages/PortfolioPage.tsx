@@ -12,15 +12,13 @@ export const PortfolioPage: React.FC = () => {
   return (
     <div id="portfolio-page-container" className="space-y-16 py-6 md:py-10 max-w-6xl mx-auto px-4" dir="rtl">
       {/* Page Header */}
-      <div className="text-center max-w-3xl mx-auto space-y-4">
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-amber-50 text-amber-700 border border-amber-200 rounded-full text-xs font-bold">
-          <Film className="w-3.5 h-3.5" />
-          <span>معرض الأعمال والإبداعات</span>
-        </span>
-        <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
+      <div className="text-center max-w-2xl mx-auto space-y-3">
+        <h1 className="text-3xl sm:text-5xl font-black text-[#0F172A] tracking-tight">
           معرض الأعمال
         </h1>
-        <p className="text-slate-600 text-lg sm:text-xl font-bold text-blue-600">
+        {/* Accent Yellow Short Line #F59E0B */}
+        <div className="w-12 h-1 bg-[#F59E0B] rounded-full mx-auto" />
+        <p className="text-base sm:text-lg text-[#64748B] font-medium pt-1">
           الأعمال تتحدث بصوت أعلى من الكلمات.
         </p>
       </div>

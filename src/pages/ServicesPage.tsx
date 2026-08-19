@@ -1,6 +1,14 @@
 import React from 'react';
 import { motion } from 'motion/react';
-import { Layers, Sparkles, MessageCircle, ArrowUpRight, CheckCircle2 } from 'lucide-react';
+import {
+  Layers,
+  Mail,
+  Video,
+  Code,
+  Palette,
+  Bot,
+  Sparkles
+} from 'lucide-react';
 import { useData } from '../context/DataContext';
 import { generateWhatsAppUrl } from '../utils/validators';
 import { EmptyFallback } from '../components/EmptyFallback';
@@ -10,123 +18,141 @@ export const ServicesPage: React.FC = () => {
   const displayName = data.global_settings.displayName || 'أحمد سامح';
 
   const visibleServices = data.services.filter((s) => s.isVisible);
-  const topics = data.topics_of_interest;
+  
+  // Default list of topics if database list is empty
+  const defaultTopicNames = [
+    'الذكاء الاصطناعي',
+    'Vibe Coding',
+    'الأنيميشن',
+    'التحريك',
+    'مكعب الروبيك'
+  ];
+
+  const topicsList =
+    data.topics_of_interest && data.topics_of_interest.length > 0
+      ? data.topics_of_interest.map((t) => t.title)
+      : defaultTopicNames;
+
+  // Icon assignment based on service title
+  const getServiceIcon = (title: string, index: number) => {
+    const t = title.toLowerCase();
+    if (t.includes('مونتاج') || t.includes('فيديو') || t.includes('video')) return Video;
+    if (t.includes('ويب') || t.includes('تطوير') || t.includes('برمج') || t.includes('web') || t.includes('code')) return Code;
+    if (t.includes('هوية') || t.includes('جرافيك') || t.includes('تصميم') || t.includes('design')) return Palette;
+    if (t.includes('ذكاء') || t.includes('ai') || t.includes('vibe')) return Bot;
+    const fallbackIcons = [Layers, Video, Code, Palette, Bot, Sparkles];
+    return fallbackIcons[index % fallbackIcons.length];
+  };
 
   return (
-    <div id="services-page-container" className="space-y-16 py-6 md:py-10 max-w-6xl mx-auto px-4" dir="rtl">
-      {/* Page Header */}
-      <div className="text-center max-w-3xl mx-auto space-y-4">
-        <span className="inline-flex items-center gap-1.5 px-3 py-1 bg-blue-50 text-blue-600 border border-blue-200 rounded-full text-xs font-bold">
-          <Layers className="w-3.5 h-3.5" />
-          <span>خدماتي ومجالات تخصصي</span>
-        </span>
-        <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
-          الخدمات الاحترافية
+    <div
+      id="services-page-container"
+      className="min-h-screen bg-white text-slate-900 py-12 md:py-16 max-w-6xl mx-auto px-4 space-y-20"
+      dir="rtl"
+    >
+      {/* 1. SERVICES HEADER */}
+      <div className="text-center max-w-2xl mx-auto space-y-3">
+        <h1 className="text-3xl sm:text-5xl font-black text-[#0F172A] tracking-tight">
+          الخدمات
         </h1>
-        <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
-          حلول تقنية وإبداعية مصممة بعناية لمساعدتك في بناء وتطوير أفكارك ومشروعاتك بأعلى معايير الجودة والسرعة.
+        {/* Accent Yellow Short Line #F59E0B */}
+        <div className="w-12 h-1 bg-[#F59E0B] rounded-full mx-auto" />
+        <p className="text-base sm:text-lg text-[#64748B] font-medium pt-1">
+          كل ما أقدمه من خدمات بجودة واحترافية
         </p>
       </div>
 
-      {/* Services Grid */}
-      <section id="services-list-section" className="space-y-6">
-        <h2 className="text-xl font-black text-slate-900 flex items-center gap-2">
-          <span>قائمة الخدمات المتاحة</span>
-        </h2>
-
+      {/* 2. SERVICES CARDS LAYOUT */}
+      <section id="services-list-section">
         {visibleServices.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {visibleServices.map((service, index) => (
-              <motion.div
-                key={service.id}
-                initial={{ opacity: 0, y: 15 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.08 }}
-                className="bg-white p-7 rounded-2xl border border-slate-200 hover:border-blue-300 hover:shadow-lg transition-all flex flex-col justify-between group relative overflow-hidden"
-              >
-                <div className="absolute top-0 right-0 w-2 h-full bg-blue-600 opacity-0 group-hover:opacity-100 transition-opacity" />
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {visibleServices.map((service, index) => {
+              const IconComponent = getServiceIcon(service.title, index);
+              const contactUrl = data.global_settings.whatsapp
+                ? generateWhatsAppUrl(
+                    data.global_settings.whatsapp,
+                    `مرحباً ${displayName}، أود الاستفسار وطلب خدمة: ${service.title}`
+                  )
+                : data.global_settings.email
+                ? `mailto:${data.global_settings.email}?subject=${encodeURIComponent(
+                    `طلب خدمة: ${service.title}`
+                  )}`
+                : '#';
 
-                <div>
-                  <div className="flex items-center justify-between mb-4">
-                    <div className="w-12 h-12 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center font-bold text-lg group-hover:bg-blue-600 group-hover:text-white transition-colors shadow-xs">
-                      <Layers className="w-6 h-6" />
+              return (
+                <motion.div
+                  key={service.id}
+                  initial={{ opacity: 0, y: 15 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ delay: index * 0.08 }}
+                  className="bg-white p-6 rounded-2xl border border-slate-100 shadow-xs hover:shadow-md hover:border-blue-100 transition-all flex flex-col justify-between group"
+                >
+                  <div>
+                    {/* Light Blue Icon Box #EFF6FF with #2563EB Icon */}
+                    <div className="w-12 h-12 rounded-xl bg-[#EFF6FF] text-[#2563EB] flex items-center justify-center mb-4 transition-transform group-hover:scale-105">
+                      <IconComponent className="w-6 h-6" />
                     </div>
-                    <span className="text-xs font-semibold text-slate-400">
-                      خدمة #{index + 1}
-                    </span>
+
+                    {/* Service Title #0F172A */}
+                    <h3 className="text-xl font-bold text-[#0F172A] mb-2 leading-snug">
+                      {service.title}
+                    </h3>
+
+                    {/* Service Description #64748B */}
+                    <p className="text-sm text-[#64748B] leading-relaxed">
+                      {service.description}
+                    </p>
                   </div>
 
-                  <h3 className="text-xl font-bold text-slate-900 mb-3 group-hover:text-blue-600 transition-colors">
-                    {service.title}
-                  </h3>
-
-                  <p className="text-slate-600 text-sm sm:text-base leading-relaxed">
-                    {service.description}
-                  </p>
-                </div>
-
-                <div className="mt-8 pt-4 border-t border-slate-100 flex items-center justify-between">
-                  <span className="text-xs font-medium text-slate-500 flex items-center gap-1">
-                    <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                    <span>تسليم متميز ودعم مستمر</span>
-                  </span>
-
-                  <a
-                    href={generateWhatsAppUrl(
-                      data.global_settings.whatsapp,
-                      `مرحباً ${displayName}، أود الاستفسار وطلب خدمة: ${service.title}`
-                    )}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-50 hover:bg-blue-600 text-blue-700 hover:text-white text-xs font-bold rounded-xl transition-all shadow-xs"
-                  >
-                    <span>طلب الخدمة</span>
-                    <ArrowUpRight className="w-3.5 h-3.5" />
-                  </a>
-                </div>
-              </motion.div>
-            ))}
+                  {/* CTA Button: #2563EB with envelope icon and white text "تواصل الآن" */}
+                  <div className="mt-8 pt-4 border-t border-slate-100">
+                    <a
+                      href={contactUrl}
+                      target={data.global_settings.whatsapp ? '_blank' : undefined}
+                      rel="noopener noreferrer"
+                      className="w-full inline-flex items-center justify-center gap-2 py-2.5 px-4 bg-[#2563EB] hover:bg-blue-700 active:scale-[0.98] text-white font-bold text-sm rounded-xl shadow-xs transition-all cursor-pointer"
+                    >
+                      <Mail className="w-4 h-4 text-white" />
+                      <span>تواصل الآن</span>
+                    </a>
+                  </div>
+                </motion.div>
+              );
+            })}
           </div>
         ) : (
-          <EmptyFallback message="لا يوجد حالياً" />
+          <EmptyFallback message="لا توجد خدمات متاحة حالياً" />
         )}
       </section>
 
-      {/* Topics of Interest Section ("موضوعات مهتم بها حالياً") */}
-      <section id="topics-section" className="bg-slate-50 border border-slate-200/80 rounded-3xl p-8 sm:p-10 space-y-6">
-        <div className="flex items-center gap-2.5">
-          <div className="w-9 h-9 rounded-xl bg-amber-100 text-amber-600 flex items-center justify-center">
-            <Sparkles className="w-5 h-5" />
-          </div>
-          <div>
-            <h2 className="text-xl font-black text-slate-900">
-              موضوعات مهتم بها حالياً
-            </h2>
-            <p className="text-xs text-slate-500 mt-0.5">
-              مجالات استكشافية وتقنيات أعمل على التعمق فيها وتطبيقها
-            </p>
-          </div>
+      {/* 3. TOPICS / INTERESTS SECTION */}
+      <section id="topics-section" className="text-center space-y-8 pt-8">
+        <div className="space-y-3">
+          <h2 className="text-2xl sm:text-3xl font-black text-[#0F172A] tracking-tight">
+            موضوعات مهتم بها حالياً
+          </h2>
+          {/* Accent Yellow Short Line #F59E0B */}
+          <div className="w-12 h-1 bg-[#F59E0B] rounded-full mx-auto" />
         </div>
 
-        {topics && topics.length > 0 ? (
-          <div className="flex flex-wrap gap-3">
-            {topics.map((topic, idx) => (
-              <motion.div
-                key={topic.id}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ delay: idx * 0.05 }}
-                className="inline-flex items-center gap-2 px-4 py-2.5 bg-white border border-slate-200 hover:border-blue-300 hover:shadow-xs rounded-xl text-sm font-bold text-slate-800 transition-all hover:scale-105"
-              >
-                <span className="w-2 h-2 rounded-full bg-blue-500" />
-                <span>{topic.title}</span>
-              </motion.div>
-            ))}
-          </div>
-        ) : (
-          <EmptyFallback message="لا يوجد حالياً" compact />
-        )}
+        {/* Pill Tags: rounded-full, bg #E0F2FE, text #1D4ED8 */}
+        <div className="flex flex-wrap items-center justify-center gap-3 max-w-3xl mx-auto">
+          {topicsList.map((topicName, idx) => (
+            <motion.span
+              key={idx}
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.05 }}
+              className="inline-flex items-center px-5 py-2.5 bg-[#E0F2FE] text-[#1D4ED8] font-bold text-sm sm:text-base rounded-full shadow-2xs hover:bg-blue-100 transition-colors"
+            >
+              {topicName}
+            </motion.span>
+          ))}
+        </div>
       </section>
     </div>
   );
 };
+

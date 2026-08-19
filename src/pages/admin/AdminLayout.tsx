@@ -143,7 +143,9 @@ export const AdminLayout: React.FC = () => {
                     ? 'bg-emerald-100 text-emerald-700'
                     : cloudSyncStatus === 'syncing'
                     ? 'bg-blue-100 text-blue-700'
-                    : 'bg-amber-100 text-amber-700'
+                    : cloudSyncStatus === 'table_missing'
+                    ? 'bg-amber-100 text-amber-800'
+                    : 'bg-rose-100 text-rose-700'
                 }`}
               >
                 <span
@@ -152,7 +154,9 @@ export const AdminLayout: React.FC = () => {
                       ? 'bg-emerald-500 animate-pulse'
                       : cloudSyncStatus === 'syncing'
                       ? 'bg-blue-500 animate-spin'
-                      : 'bg-amber-500'
+                      : cloudSyncStatus === 'table_missing'
+                      ? 'bg-amber-500'
+                      : 'bg-rose-500'
                   }`}
                 />
                 <span>
@@ -160,7 +164,9 @@ export const AdminLayout: React.FC = () => {
                     ? 'متصل ولحظي'
                     : cloudSyncStatus === 'syncing'
                     ? 'جاري المزامنة'
-                    : 'محلي / احتياطي'}
+                    : cloudSyncStatus === 'table_missing'
+                    ? 'يحتاج إنشاء جدول'
+                    : 'غير متصل'}
                 </span>
               </span>
             </div>
