@@ -26,3 +26,19 @@
   background: #94a3b8;
 }
 
+/* Floating animation for Hero profile picture */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-8px);
+  }
+}
+
+.hero-image-container {
+  animation: float 3.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+

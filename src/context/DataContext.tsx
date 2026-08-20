@@ -88,6 +88,7 @@ export const INITIAL_DATA: AppDataState = {
     tiktok: 'https://tiktok.com',
     youtube: 'https://youtube.com',
     blogger: 'https://blogger.com',
+    x: 'https://x.com',
   },
   about_projects: [],
   interests: [

@@ -49,14 +49,14 @@ export const HomePage: React.FC = () => {
         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-5xl h-80 bg-gradient-to-b from-[#E0F2FE]/40 via-[#F0F9FF]/20 to-transparent blur-3xl pointer-events-none -z-10" />
 
         <div className="max-w-4xl mx-auto text-center px-4 flex flex-col items-center">
-          {/* Centered Circular Profile Avatar with #EAB308 Gold Border (2px) - Enlarged to 220px+ */}
+          {/* Centered Circular Profile Avatar with #EAB308 Gold Border (2px) - Enlarged to 220px+ with Floating Effect */}
           <motion.div
             initial={{ scale: 0.85, opacity: 0 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={{ duration: 0.4 }}
             className="relative mb-8"
           >
-            <div className="w-56 h-56 sm:w-64 sm:h-64 rounded-full p-1.5 bg-white border-2 border-[#EAB308] shadow-lg flex items-center justify-center">
+            <div className="hero-image-container w-56 h-56 sm:w-64 sm:h-64 rounded-full p-1.5 bg-white border-2 border-[#EAB308] shadow-lg flex items-center justify-center">
               <div className="w-full h-full rounded-full overflow-hidden bg-[#EFF6FF] flex items-center justify-center">
                 {data.global_settings.heroImage ? (
                   <img

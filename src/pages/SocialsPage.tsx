@@ -9,6 +9,18 @@ import {
 } from 'lucide-react';
 import { useData } from '../context/DataContext';
 
+// Vector Icon for X Platform
+const XIcon: React.FC<{ className?: string }> = ({ className = 'w-8 h-8' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+    aria-hidden="true"
+  >
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
+
 export const SocialsPage: React.FC = () => {
   const { data } = useData();
   const socials = data.social_links;
@@ -38,12 +50,23 @@ export const SocialsPage: React.FC = () => {
       url: socials.blogger,
       icon: Globe,
     },
+    {
+      id: 'x',
+      name: 'إكس',
+      url: socials.x || socials.twitter || '',
+      icon: XIcon,
+    },
   ];
+
+  // If X link is empty, hide the X card automatically as requested
+  const visiblePlatforms = socialPlatforms.filter(
+    (platform) => platform.id !== 'x' || (platform.url && platform.url.trim() !== '')
+  );
 
   return (
     <div
       id="socials-page-container"
-      className="min-h-screen bg-white text-slate-900 py-12 md:py-16 max-w-5xl mx-auto px-4 space-y-14"
+      className="min-h-screen bg-white text-slate-900 py-12 md:py-16 max-w-6xl mx-auto px-4 space-y-14"
       dir="rtl"
     >
       {/* 1. HEADER SECTION */}
@@ -59,8 +82,8 @@ export const SocialsPage: React.FC = () => {
       </div>
 
       {/* 2. SOCIAL MEDIA CARDS (Centered Cards Layout) */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        {socialPlatforms.map((platform, idx) => {
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+        {visiblePlatforms.map((platform, idx) => {
           const Icon = platform.icon;
           const hasValidLink = Boolean(platform.url && platform.url.trim() !== '');
 
@@ -79,7 +102,7 @@ export const SocialsPage: React.FC = () => {
                   <Icon className="w-8 h-8" />
                 </div>
 
-                {/* Platform Name: Bold #0F172A centered (no subtext) */}
+                {/* Platform Name: Bold #0F172A centered */}
                 <h3 className="text-lg font-bold text-[#0F172A]">
                   {platform.name}
                 </h3>
@@ -113,4 +136,5 @@ export const SocialsPage: React.FC = () => {
     </div>
   );
 };
+
 

@@ -3,6 +3,18 @@ import { Share2, Save, Instagram, Youtube, Globe, Video } from 'lucide-react';
 import { useData } from '../../../context/DataContext';
 import { useToast } from '../../../context/ToastContext';
 
+// Vector Icon for X / Twitter
+const XIcon: React.FC<{ className?: string }> = ({ className = 'w-4 h-4' }) => (
+  <svg
+    viewBox="0 0 24 24"
+    fill="currentColor"
+    className={className}
+    aria-hidden="true"
+  >
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
+  </svg>
+);
+
 export const SocialsTab: React.FC = () => {
   const { data, updateSocialLinks } = useData();
   const toast = useToast();
@@ -12,6 +24,7 @@ export const SocialsTab: React.FC = () => {
     tiktok: data.social_links.tiktok || '',
     youtube: data.social_links.youtube || '',
     blogger: data.social_links.blogger || '',
+    x: data.social_links.x || data.social_links.twitter || '',
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -21,6 +34,8 @@ export const SocialsTab: React.FC = () => {
       tiktok: formData.tiktok.trim(),
       youtube: formData.youtube.trim(),
       blogger: formData.blogger.trim(),
+      x: formData.x.trim(),
+      twitter: formData.x.trim(),
     });
     toast.success('تم حفظ روابط الحسابات الاجتماعية بنجاح');
   };
@@ -33,7 +48,7 @@ export const SocialsTab: React.FC = () => {
           <span>إدارة حسابات التواصل الاجتماعي</span>
         </h2>
         <p className="text-sm text-slate-500 mt-1">
-          تعديل الروابط المباشرة لصفحة &quot;حساباتي&quot;. في حال ترك أي حقل فارغاً، ستظهر البطاقة بحالة &quot;لا يوجد حالياً&quot;.
+          تعديل الروابط المباشرة لصفحة &quot;حساباتي&quot;. في حال ترك رابط منصة إكس فارغاً، سيتم إخفاء بطاقتها تلقائياً.
         </p>
       </div>
 
@@ -98,6 +113,21 @@ export const SocialsTab: React.FC = () => {
           />
         </div>
 
+        {/* X (Twitter) */}
+        <div className="space-y-1.5">
+          <label className="text-sm font-bold text-slate-800 flex items-center gap-2">
+            <XIcon className="w-4 h-4 text-slate-900" />
+            <span>رابط منصة إكس (X / Twitter)</span>
+          </label>
+          <input
+            type="url"
+            value={formData.x}
+            onChange={(e) => setFormData({ ...formData, x: e.target.value })}
+            placeholder="https://x.com/yourprofile"
+            className="w-full p-3.5 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:bg-white rounded-xl text-slate-900 text-sm font-sans focus:outline-hidden transition-all shadow-2xs"
+          />
+        </div>
+
         <div className="pt-4 border-t border-slate-100 flex items-center justify-end">
           <button
             type="submit"
@@ -111,3 +141,4 @@ export const SocialsTab: React.FC = () => {
     </div>
   );
 };
+

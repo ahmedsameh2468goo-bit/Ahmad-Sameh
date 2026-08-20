@@ -33,6 +33,8 @@ export interface SocialLinks {
   tiktok: string;
   youtube: string;
   blogger: string;
+  x?: string;
+  twitter?: string;
 }
 
 export interface AboutProject {
