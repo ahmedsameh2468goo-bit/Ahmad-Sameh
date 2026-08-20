@@ -1,5 +1,5 @@
 /**
- * Validation and sanitization helpers for Ahmed Sameh Portfolio
+ * Validation and sanitization helpers for Ahmad Sameh Portfolio
  */
 
 // Max allowed file size: 5MB

@@ -145,7 +145,7 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({
             <div className="relative w-28 h-28 rounded-2xl overflow-hidden border-2 border-white shadow-md bg-white">
               <img
                 src={currentImage}
-                alt="Ahmed Sameh Live Preview"
+                alt="Ahmad Sameh Live Preview"
                 className="w-full h-full object-cover"
                 referrerPolicy="no-referrer"
               />

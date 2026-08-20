@@ -1,0 +1,17 @@
+{
+  "name": "Ahmad Sameh",
+  "short_name": "Ahmad Sameh",
+  "description": "الموقع والملف التعريفي الرسمي لأحمد سامح",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2563EB",
+  "icons": [
+    {
+      "src": "/file_0000000082e081f4b649be1d165b1aa5.png",
+      "sizes": "192x192 512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
+}
