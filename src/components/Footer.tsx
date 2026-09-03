@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Shield } from 'lucide-react';
 import { useData } from '../context/DataContext';
 
 export const Footer: React.FC = () => {
@@ -38,18 +37,9 @@ export const Footer: React.FC = () => {
           </Link>
         </nav>
 
-        {/* Copyright and Admin Link */}
+        {/* Copyright */}
         <div className="pt-3 border-t border-slate-50 flex flex-wrap items-center justify-center gap-2 text-xs text-[#64748B]">
           <span>© {currentYear} {displayName}. جميع الحقوق محفوظة.</span>
-          <span>-</span>
-          <Link
-            to="/admin"
-            id="footer-admin-link"
-            className="inline-flex items-center gap-1 text-[#64748B] hover:text-[#2563EB] transition-colors"
-          >
-            <Shield className="w-3 h-3 text-slate-400" />
-            <span>لوحة التحكم</span>
-          </Link>
         </div>
       </div>
     </footer>

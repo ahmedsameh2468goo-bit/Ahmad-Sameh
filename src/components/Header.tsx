@@ -6,7 +6,6 @@ import {
   X,
   Sparkles,
   ArrowUpRight,
-  Shield,
   Layers,
   Film,
   Share2,
@@ -101,9 +100,9 @@ export const Header: React.FC = () => {
             })}
           </nav>
 
-          {/* CTA & Admin Quick access */}
-          <div className="hidden lg:flex items-center gap-3">
-            {data.global_settings.whatsapp && (
+          {/* CTA Button */}
+          {data.global_settings.whatsapp && (
+            <div className="hidden lg:flex items-center">
               <a
                 href={generateWhatsAppUrl(data.global_settings.whatsapp, `مرحباً ${displayName}، أود التواصل معك بخصوص مشروع`)}
                 target="_blank"
@@ -114,28 +113,11 @@ export const Header: React.FC = () => {
                 <span>تواصل معي</span>
                 <ArrowUpRight className="w-4 h-4" />
               </a>
-            )}
-
-            <Link
-              to="/admin"
-              id="header-admin-btn"
-              title="لوحة الإدارة"
-              className="p-2.5 text-slate-500 hover:text-blue-600 bg-slate-100 hover:bg-blue-50 rounded-xl transition-colors border border-slate-200/80"
-            >
-              <Shield className="w-4 h-4" />
-            </Link>
-          </div>
+            </div>
+          )}
 
           {/* Mobile menu button */}
           <div className="flex md:hidden items-center gap-2">
-            <Link
-              to="/admin"
-              id="mobile-header-admin-btn"
-              className="p-2 text-slate-500 hover:text-blue-600 bg-slate-100 rounded-xl border border-slate-200"
-            >
-              <Shield className="w-4 h-4" />
-            </Link>
-
             <button
               id="mobile-menu-toggle-btn"
               type="button"
