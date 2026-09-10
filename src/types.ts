@@ -22,9 +22,12 @@ export interface TopicItem {
 
 export interface PortfolioProject {
   id: string;
-  title: string;
-  description: string;
-  youtubeUrl: string;
+  serviceType: string; // نوع الخدمة (e.g. إنشاء موقع, مونتاج فيديو ريلز, تصميم هوية بصرية)
+  title: string; // عنوان المشروع
+  description: string; // نص توضيحي للمشروع
+  videoUrl: string; // رابط الفيديو على أي منصة
+  youtubeUrl?: string; // للتوافقية السابقة
+  externalUrl?: string; // رابط الموقع على النت / الرابط الخارجي (اختياري)
   order: number;
 }
 

@@ -133,3 +133,128 @@ export const validateYouTubeUrl = (
     error: 'رابط يوتيوب غير صالح. يجب أن يكون الرابط من موقع youtube.com أو youtu.be',
   };
 };
+
+/**
+ * General URL format validator (must start with http:// or https://)
+ */
+export const isValidUrl = (url: string): boolean => {
+  if (!url || typeof url !== 'string') return false;
+  const trimmed = url.trim();
+  try {
+    const parsed = new URL(trimmed);
+    return parsed.protocol === 'http:' || parsed.protocol === 'https:';
+  } catch {
+    return false;
+  }
+};
+
+export type VideoPlatformType =
+  | 'youtube'
+  | 'tiktok'
+  | 'instagram'
+  | 'vimeo'
+  | 'facebook'
+  | 'x'
+  | 'generic';
+
+export interface VideoPlatformDetection {
+  platform: VideoPlatformType;
+  platformName: string;
+  badgeLabel: string;
+  watchLabel: string;
+  videoId?: string;
+  thumbnailUrl?: string;
+}
+
+/**
+ * Automatically detects the platform and video details from a video URL
+ */
+export const detectVideoPlatform = (url?: string): VideoPlatformDetection => {
+  if (!url || typeof url !== 'string' || !url.trim()) {
+    return {
+      platform: 'generic',
+      platformName: 'فيديو',
+      badgeLabel: 'فيديو المشروع',
+      watchLabel: 'مشاهدة الفيديو',
+    };
+  }
+
+  const trimmed = url.trim();
+  const lower = trimmed.toLowerCase();
+
+  // 1. YouTube
+  if (lower.includes('youtube.com') || lower.includes('youtu.be')) {
+    const ytMatch = trimmed.match(
+      /(?:youtube\.com\/(?:watch\?(?:.*&)?v=|shorts\/|embed\/)|youtu\.be\/)([a-zA-Z0-9_-]{11})/
+    );
+    const videoId = ytMatch ? ytMatch[1] : undefined;
+    return {
+      platform: 'youtube',
+      platformName: 'يوتيوب',
+      badgeLabel: 'فيديو يوتيوب',
+      watchLabel: 'مشاهدة على يوتيوب',
+      videoId,
+      thumbnailUrl: videoId
+        ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
+        : undefined,
+    };
+  }
+
+  // 2. TikTok
+  if (lower.includes('tiktok.com')) {
+    return {
+      platform: 'tiktok',
+      platformName: 'تيك توك',
+      badgeLabel: 'فيديو تيك توك',
+      watchLabel: 'مشاهدة على تيك توك',
+    };
+  }
+
+  // 3. Instagram
+  if (lower.includes('instagram.com')) {
+    return {
+      platform: 'instagram',
+      platformName: 'إنستغرام',
+      badgeLabel: 'إنستغرام ريلز',
+      watchLabel: 'مشاهدة على إنستغرام',
+    };
+  }
+
+  // 4. Vimeo
+  if (lower.includes('vimeo.com')) {
+    return {
+      platform: 'vimeo',
+      platformName: 'فيميو',
+      badgeLabel: 'فيديو فيميو',
+      watchLabel: 'مشاهدة على فيميو',
+    };
+  }
+
+  // 5. Facebook
+  if (lower.includes('facebook.com') || lower.includes('fb.watch')) {
+    return {
+      platform: 'facebook',
+      platformName: 'فيسبوك',
+      badgeLabel: 'فيديو فيسبوك',
+      watchLabel: 'مشاهدة على فيسبوك',
+    };
+  }
+
+  // 6. X (Twitter)
+  if (lower.includes('twitter.com') || lower.includes('x.com')) {
+    return {
+      platform: 'x',
+      platformName: 'إكس',
+      badgeLabel: 'فيديو إكس',
+      watchLabel: 'مشاهدة على إكس',
+    };
+  }
+
+  // 7. Generic video / other platforms
+  return {
+    platform: 'generic',
+    platformName: 'فيديو',
+    badgeLabel: 'فيديو المشروع',
+    watchLabel: 'مشاهدة الفيديو',
+  };
+};

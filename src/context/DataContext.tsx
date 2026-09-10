@@ -15,6 +15,20 @@ const STORAGE_KEY = 'ahmed_sameh_portfolio_data_v1';
 const SUPABASE_TABLE = 'portfolio_data';
 const ROW_ID = 'default';
 
+export const normalizePortfolioItems = (items: any[]): PortfolioProject[] => {
+  if (!Array.isArray(items)) return [];
+  return items.map((p, idx) => ({
+    id: p.id || `port-${Date.now()}-${idx}`,
+    serviceType: p.serviceType || 'خدمة إبداعية',
+    title: p.title || 'مشروع جديد',
+    description: p.description || '',
+    videoUrl: p.videoUrl || p.youtubeUrl || '',
+    youtubeUrl: p.youtubeUrl || p.videoUrl || '',
+    externalUrl: p.externalUrl || '',
+    order: typeof p.order === 'number' ? p.order : idx + 1,
+  }));
+};
+
 export const INITIAL_DATA: AppDataState = {
   global_settings: {
     displayName: 'أحمد سامح',
@@ -63,23 +77,32 @@ export const INITIAL_DATA: AppDataState = {
   portfolio: [
     {
       id: 'port-1',
+      serviceType: 'مونتاج فيديو ريلز وسينمائي',
       title: 'مشروع مونتاج وتأثيرات بصرية سينمائية',
-      description: 'استعراض مهارات المونتاج وتعديل الألوان والتأثيرات الصوتية في إنتاج فيديو قصير جذاب.',
+      description: 'استعراض مهارات المونتاج وتعديل الألوان والتأثيرات الصوتية في إنتاج فيديو قصير جذاب ذو إيقاع بصري احترافي.',
+      videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
       youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      externalUrl: 'https://ahmedsameh.com',
       order: 1,
     },
     {
       id: 'port-2',
+      serviceType: 'تطوير وبرمجة ويب (Vibe Coding)',
       title: 'شرح وتطبيق عملي على Vibe Coding',
-      description: 'جلسة برمجة تفاعلية باستخدام أدوات الذكاء الاصطناعي لبناء تطبيق ويب في دقائق معدودة.',
+      description: 'جلسة برمجة تفاعلية باستخدام أدوات الذكاء الاصطناعي لبناء تطبيق ويب في دقائق معدودة مع أفضل الممارسات.',
+      videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
       youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      externalUrl: '',
       order: 2,
     },
     {
       id: 'port-3',
+      serviceType: 'صناعة محتوى ومهارات ذهنية',
       title: 'رحلة حل واحتراف مكعب الروبيك في ثوانٍ',
-      description: 'فيديو تعليمي وممتع يوضح الخوارزميات والاستراتيجيات السريعة لحل مكعب الروبيك.',
+      description: 'فيديو تعليمي وممتع يوضح الخوارزميات والاستراتيجيات السريعة لحل مكعب الروبيك باحترافية وسهولة.',
+      videoUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
       youtubeUrl: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+      externalUrl: '',
       order: 3,
     },
   ],
@@ -174,6 +197,9 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
             ...INITIAL_DATA.social_links,
             ...(parsed.social_links || {}),
           },
+          portfolio: Array.isArray(parsed.portfolio)
+            ? normalizePortfolioItems(parsed.portfolio)
+            : INITIAL_DATA.portfolio,
         };
       }
     } catch (e) {
@@ -305,7 +331,9 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
                 ...(cloudState?.social_links || {}),
               },
               services: Array.isArray(cloudState?.services) ? cloudState.services : prev.services,
-              portfolio: Array.isArray(cloudState?.portfolio) ? cloudState.portfolio : prev.portfolio,
+              portfolio: Array.isArray(cloudState?.portfolio)
+                ? normalizePortfolioItems(cloudState.portfolio)
+                : prev.portfolio,
               topics_of_interest: Array.isArray(cloudState?.topics_of_interest)
                 ? cloudState.topics_of_interest
                 : prev.topics_of_interest,
@@ -373,7 +401,9 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
                   ...(updatedState.social_links || {}),
                 },
                 services: Array.isArray(updatedState.services) ? updatedState.services : prev.services,
-                portfolio: Array.isArray(updatedState.portfolio) ? updatedState.portfolio : prev.portfolio,
+                portfolio: Array.isArray(updatedState.portfolio)
+                  ? normalizePortfolioItems(updatedState.portfolio)
+                  : prev.portfolio,
                 topics_of_interest: Array.isArray(updatedState.topics_of_interest)
                   ? updatedState.topics_of_interest
                   : prev.topics_of_interest,
@@ -514,7 +544,16 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
       ...prev,
       portfolio: [
         ...prev.portfolio,
-        { ...project, id: `port-${Date.now()}`, order: prev.portfolio.length + 1 },
+        {
+          id: `port-${Date.now()}`,
+          serviceType: project.serviceType || 'خدمة إبداعية',
+          title: project.title,
+          description: project.description || '',
+          videoUrl: project.videoUrl || project.youtubeUrl || '',
+          youtubeUrl: project.youtubeUrl || project.videoUrl || '',
+          externalUrl: project.externalUrl || '',
+          order: prev.portfolio.length + 1,
+        },
       ],
     }));
   };
@@ -522,7 +561,18 @@ export const DataProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const updatePortfolioProject = (id: string, updated: Partial<PortfolioProject>) => {
     commitState((prev) => ({
       ...prev,
-      portfolio: prev.portfolio.map((p) => (p.id === id ? { ...p, ...updated } : p)),
+      portfolio: prev.portfolio.map((p) =>
+        p.id === id
+          ? {
+              ...p,
+              ...updated,
+              serviceType: updated.serviceType !== undefined ? updated.serviceType : p.serviceType,
+              videoUrl: updated.videoUrl ?? updated.youtubeUrl ?? p.videoUrl ?? '',
+              youtubeUrl: updated.youtubeUrl ?? updated.videoUrl ?? p.youtubeUrl ?? '',
+              externalUrl: updated.externalUrl !== undefined ? updated.externalUrl : p.externalUrl,
+            }
+          : p
+      ),
     }));
   };
 
