@@ -1,5 +1,7 @@
 export interface GlobalSettings {
   displayName?: string; // Display name shown across the site
+  username?: string; // Unified username (e.g., aahmd_saiimd)
+  tagline?: string; // Custom descriptive tagline under username (e.g., اليوزر النيم الموحد في كل منصات الكوكب)
   heroImage: string; // Base64 Data URL or empty
   bio: string;
   whatsapp: string;
@@ -32,11 +34,16 @@ export interface PortfolioProject {
 }
 
 export interface SocialLinks {
-  instagram: string;
-  tiktok: string;
-  youtube: string;
-  blogger: string;
+  whatsapp?: string;
+  instagram?: string;
+  youtube?: string;
+  tiktok?: string;
   x?: string;
+  threads?: string;
+  kick?: string;
+  linkedin?: string;
+  // Legacy fields for backward compatibility
+  blogger?: string;
   twitter?: string;
 }
 

@@ -11,6 +11,8 @@ export const GlobalSettingsTab: React.FC = () => {
 
   const [formData, setFormData] = useState({
     displayName: data.global_settings.displayName || 'أحمد سامح',
+    username: data.global_settings.username || 'aahmd_saiimd',
+    tagline: data.global_settings.tagline || 'اليوزر النيم الموحد في كل منصات الكوكب',
     heroImage: data.global_settings.heroImage || '',
     bio: data.global_settings.bio || '',
     whatsapp: data.global_settings.whatsapp || '',
@@ -53,6 +55,8 @@ export const GlobalSettingsTab: React.FC = () => {
     setErrors({});
     updateGlobalSettings({
       displayName: formData.displayName.trim() || 'أحمد سامح',
+      username: formData.username.trim().replace(/^@/, '') || 'aahmd_saiimd',
+      tagline: formData.tagline.trim(),
       heroImage: formData.heroImage,
       bio: formData.bio,
       whatsapp: sanitizedPhone,
@@ -70,31 +74,79 @@ export const GlobalSettingsTab: React.FC = () => {
           <span>الإعدادات العامة والملف الشخصي</span>
         </h2>
         <p className="text-sm text-slate-500 mt-1">
-          إدارة الاسم الظاهر، الصورة الشخصية، النبذة التعريفية، ومعلومات التواصل الرئيسية
+          إدارة الاسم الظاهر، اسم المستخدم الموحد، الصورة الشخصية، النبذة التعريفية، ومعلومات التواصل الرئيسية
         </p>
       </div>
 
       <form onSubmit={handleSubmit} className="space-y-8 bg-white p-6 sm:p-8 rounded-3xl border border-slate-200 shadow-xs">
-        {/* 1. Display Name Input */}
-        <div className="space-y-2 pb-6 border-b border-slate-100">
-          <label
-            htmlFor="admin-display-name-input"
-            className="text-sm font-bold text-slate-800 flex items-center gap-2"
-          >
-            <User className="w-4 h-4 text-blue-600" />
-            <span>الاسم الظاهر (في الهيدر والموقع) / Display Name</span>
-          </label>
-          <input
-            id="admin-display-name-input"
-            type="text"
-            value={formData.displayName}
-            onChange={(e) => setFormData({ ...formData, displayName: e.target.value })}
-            placeholder="أدخل الاسم الجديد (مثال: أحمد سامح)"
-            className="w-full p-3.5 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:bg-white rounded-xl text-slate-900 text-sm font-bold focus:outline-hidden transition-all shadow-2xs"
-          />
-          <span className="text-xs text-slate-400">
-            هذا الاسم سيظهر فوراً في الهيدر، الفوتر، والصفحة الرئيسية وكافة أرجاء الموقع بمجرد الحفظ.
-          </span>
+        {/* 1. Display Name & Username & Tagline Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pb-6 border-b border-slate-100">
+          {/* Display Name */}
+          <div className="space-y-2">
+            <label
+              htmlFor="admin-display-name-input"
+              className="text-sm font-bold text-slate-800 flex items-center gap-2"
+            >
+              <User className="w-4 h-4 text-blue-600" />
+              <span>الاسم الظاهر (في الهيدر والفوتر) / Display Name</span>
+            </label>
+            <input
+              id="admin-display-name-input"
+              type="text"
+              value={formData.displayName}
+              onChange={(e) => setFormData({ ...formData, displayName: e.target.value })}
+              placeholder="مثال: أحمد سامح"
+              className="w-full p-3.5 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:bg-white rounded-xl text-slate-900 text-sm font-bold focus:outline-hidden transition-all shadow-2xs"
+            />
+          </div>
+
+          {/* Unified Username */}
+          <div className="space-y-2">
+            <label
+              htmlFor="admin-username-input"
+              className="text-sm font-bold text-slate-800 flex items-center gap-2"
+            >
+              <span className="w-4 h-4 rounded-full bg-cyan-100 text-cyan-700 flex items-center justify-center text-xs font-mono font-bold">@</span>
+              <span>اليوزر الموحد / Unified Username</span>
+            </label>
+            <div className="relative">
+              <span className="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 font-mono font-bold text-sm">@</span>
+              <input
+                id="admin-username-input"
+                type="text"
+                dir="ltr"
+                value={formData.username}
+                onChange={(e) => setFormData({ ...formData, username: e.target.value })}
+                placeholder="aahmd_saiimd"
+                className="w-full p-3.5 pr-8 bg-slate-50 border border-slate-200 focus:border-[#00d9fe] focus:bg-white rounded-xl text-slate-900 text-sm font-bold font-mono focus:outline-hidden transition-all shadow-2xs text-right"
+              />
+            </div>
+            <span className="text-xs text-slate-400">
+              يظهر مباشرة أسفل الصورة الشخصية في الصفحة الرئيسية وصفحة حساباتي.
+            </span>
+          </div>
+
+          {/* Custom Subtitle Tagline */}
+          <div className="space-y-2 md:col-span-2">
+            <label
+              htmlFor="admin-tagline-input"
+              className="text-sm font-bold text-slate-800 flex items-center gap-2"
+            >
+              <FileText className="w-4 h-4 text-blue-600" />
+              <span>العبارة التوضيحية لليوزر (Subtitle Tagline)</span>
+            </label>
+            <input
+              id="admin-tagline-input"
+              type="text"
+              value={formData.tagline}
+              onChange={(e) => setFormData({ ...formData, tagline: e.target.value })}
+              placeholder="مثال: اليوزر النيم الموحد في كل منصات الكوكب"
+              className="w-full p-3.5 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:bg-white rounded-xl text-slate-900 text-sm font-medium focus:outline-hidden transition-all shadow-2xs"
+            />
+            <span className="text-xs text-slate-400">
+              عبارة قصيرة تظهر مباشرة أسفل اسم المستخدم لتأكيد الحضور الموحد عبر كل المنصات.
+            </span>
+          </div>
         </div>
 
         {/* 2. Direct Image Uploader */}

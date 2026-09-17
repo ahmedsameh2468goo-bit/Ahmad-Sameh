@@ -46,8 +46,8 @@ export const Header: React.FC = () => {
             id="brand-logo-link"
             className="flex items-center gap-3 group focus:outline-hidden"
           >
-            <div className="relative w-11 h-11 rounded-2xl bg-gradient-to-br from-blue-600 via-blue-500 to-blue-700 p-0.5 shadow-md shadow-blue-500/20 group-hover:scale-105 transition-transform">
-              <div className="w-full h-full bg-white rounded-[14px] flex items-center justify-center overflow-hidden">
+            <div className="relative w-11 h-11 rounded-2xl bg-gradient-to-br from-[#00d9fe] via-blue-600 to-[#00d9fe] p-0.5 shadow-md shadow-cyan-500/20 group-hover:shadow-[0_0_18px_rgba(0,217,254,0.5)] group-hover:scale-105 transition-all">
+              <div className="w-full h-full bg-[#f6f6e9] rounded-[14px] flex items-center justify-center overflow-hidden">
                 {data.global_settings.heroImage ? (
                   <img
                     src={data.global_settings.heroImage}
@@ -56,12 +56,12 @@ export const Header: React.FC = () => {
                     referrerPolicy="no-referrer"
                   />
                 ) : (
-                  <span className="font-extrabold text-sm sm:text-base text-blue-600 tracking-tighter">
+                  <span className="font-black text-sm sm:text-base text-slate-900 tracking-tighter">
                     {displayName.slice(0, 2)}
                   </span>
                 )}
               </div>
-              <div className="absolute -bottom-1 -left-1 w-3.5 h-3.5 bg-amber-400 border-2 border-white rounded-full shadow-xs"></div>
+              <div className="absolute -bottom-1 -left-1 w-3.5 h-3.5 bg-[#00d9fe] border-2 border-white rounded-full shadow-[0_0_8px_#00d9fe]"></div>
             </div>
 
             <div className="flex flex-col">
@@ -69,17 +69,16 @@ export const Header: React.FC = () => {
                 {displayName}
               </span>
               <span className="text-[11px] font-semibold text-slate-500 flex items-center gap-1">
-                <Sparkles className="w-3 h-3 text-amber-500" />
-                <span>الملف التعريفي الرسمي</span>
+                <Sparkles className="w-3 h-3 text-[#00d9fe]" />
+                <span>@{data.global_settings.username?.replace(/^@/, '') || 'aahmd_saiimd'}</span>
               </span>
             </div>
           </Link>
 
           {/* Desktop Navigation */}
-          <nav id="desktop-navbar" className="hidden md:flex items-center gap-1 bg-slate-100/70 p-1.5 rounded-2xl border border-slate-200/60">
+          <nav id="desktop-navbar" className="hidden md:flex items-center gap-1 bg-white/70 backdrop-blur-md p-1.5 rounded-2xl border border-slate-200/80 shadow-2xs">
             {navLinks.map((link) => {
               const Icon = link.icon;
-              const isActive = location.pathname === link.path;
               return (
                 <NavLink
                   key={link.path}
@@ -88,13 +87,17 @@ export const Header: React.FC = () => {
                   className={({ isActive }) =>
                     `relative px-4 py-2 rounded-xl text-sm font-semibold transition-all flex items-center gap-2 ${
                       isActive
-                        ? 'text-blue-600 bg-white shadow-xs font-bold'
-                        : 'text-slate-600 hover:text-slate-900 hover:bg-white/60'
+                        ? 'text-slate-950 bg-white shadow-xs font-bold border border-[#00d9fe]/40 shadow-[0_2px_12px_rgba(0,217,254,0.15)]'
+                        : 'text-slate-600 hover:text-slate-950 hover:bg-white/80'
                     }`
                   }
                 >
-                  <Icon className={`w-4 h-4 ${isActive ? 'text-blue-600' : 'text-slate-400'}`} />
-                  <span>{link.name}</span>
+                  {({ isActive }) => (
+                    <>
+                      <Icon className={`w-4 h-4 transition-colors ${isActive ? 'text-[#00d9fe]' : 'text-slate-400'}`} />
+                      <span>{link.name}</span>
+                    </>
+                  )}
                 </NavLink>
               );
             })}
@@ -108,10 +111,10 @@ export const Header: React.FC = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 id="header-whatsapp-cta"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-bold rounded-xl shadow-md shadow-blue-600/20 hover:shadow-lg hover:shadow-blue-600/30 transition-all hover:scale-[1.02] active:scale-[0.98]"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white text-sm font-bold rounded-xl border border-slate-700 shadow-xs hover:border-[#00d9fe] hover:shadow-[0_0_20px_rgba(0,217,254,0.4)] transition-all hover:scale-[1.02] active:scale-[0.98] group"
               >
                 <span>تواصل معي</span>
-                <ArrowUpRight className="w-4 h-4" />
+                <ArrowUpRight className="w-4 h-4 text-[#00d9fe] group-hover:rotate-12 transition-transform" />
               </a>
             </div>
           )}
