@@ -1,6 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { Sparkles, Shield, ArrowUp } from 'lucide-react';
+import { Sparkles, ArrowUp } from 'lucide-react';
 import { useData } from '../context/DataContext';
 
 export const Footer: React.FC = () => {
@@ -97,17 +96,9 @@ export const Footer: React.FC = () => {
           </button>
         </div>
 
-        {/* Copyright and Admin link */}
-        <div className="pt-6 border-t border-slate-200 flex flex-wrap items-center justify-between gap-4 text-xs text-slate-500">
+        {/* Copyright notice */}
+        <div className="pt-6 border-t border-slate-200 flex items-center justify-center text-xs text-slate-500">
           <span>© {currentYear} {displayName} — الحركة هي عالمي. جميع الحقوق محفوظة.</span>
-
-          <Link
-            to="/admin"
-            className="inline-flex items-center gap-1.5 text-slate-500 hover:text-cyan-600 transition-colors"
-          >
-            <Shield className="w-3.5 h-3.5" />
-            <span>بوابة الإدارة</span>
-          </Link>
         </div>
       </div>
     </footer>

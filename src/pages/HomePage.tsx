@@ -690,7 +690,7 @@ export const HomePage: React.FC = () => {
         className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20 space-y-12"
       >
         {/* Section Header */}
-        <div className="text-center max-w-2xl mx-auto space-y-3.5">
+        <div className="text-center max-w-3xl mx-auto space-y-3.5">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-cyan-200 text-cyan-700 text-xs font-bold shadow-xs">
             <User className="w-3.5 h-3.5 text-cyan-600" />
             <span>الهوية والرؤية الإبداعية</span>
@@ -698,81 +698,44 @@ export const HomePage: React.FC = () => {
           <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
             {data.global_settings.aboutTitle || 'عني أكثر'}
           </h2>
+
+          {/* Smooth, chic plain text element for Job Title / Muted Subtitle (no card border) */}
+          {data.global_settings.jobTitle && (
+            <div className="text-base sm:text-lg font-bold text-cyan-700 tracking-wide flex items-center justify-center gap-2">
+              <span className="w-1.5 h-1.5 rounded-full bg-[#00d9fe]" />
+              <span>{data.global_settings.jobTitle}</span>
+              <span className="w-1.5 h-1.5 rounded-full bg-[#00d9fe]" />
+            </div>
+          )}
+
           <div className="w-14 h-1 bg-[#00d9fe] rounded-full mx-auto" />
-          <p className="text-slate-600 text-base sm:text-lg">
+          <p className="text-slate-600 text-base sm:text-lg leading-relaxed">
             {data.global_settings.aboutSubtitle || 'رؤيتي، فلسفتي في العمل، والمشاريع والتجارب التي أعمل عليها'}
           </p>
         </div>
 
-        {/* 1. Philosophy Box & Identity */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
-          {/* Main Identity & Bio */}
-          <div className="lg:col-span-5 bg-white rounded-3xl border border-slate-200/90 p-7 sm:p-8 flex flex-col justify-between shadow-xs">
-            <div className="space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-2xl bg-cyan-50 border border-cyan-100 flex items-center justify-center text-cyan-600">
-                  <User className="w-6 h-6" />
-                </div>
-                <div>
-                  <h3 className="text-xl sm:text-2xl font-black text-slate-900">{displayName}</h3>
-                  <p className="text-xs font-mono font-bold text-cyan-700 dir-ltr text-right">
-                    @{username.replace(/^@/, '')}
-                  </p>
-                </div>
-              </div>
-
-              {data.global_settings.jobTitle && (
-                <div className="inline-block px-3 py-1 rounded-full bg-slate-100 text-xs font-bold text-slate-700 border border-slate-200">
-                  {data.global_settings.jobTitle}
-                </div>
-              )}
-
-              <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-normal">
-                {bio}
-              </p>
+        {/* 1. Philosophy Box (Standalone Stylized Card) */}
+        <div className="max-w-4xl mx-auto w-full bg-white rounded-3xl border-2 border-cyan-200/80 p-8 sm:p-10 flex flex-col justify-between shadow-[0_8px_30px_rgba(0,217,254,0.08)] relative overflow-hidden group">
+          <div className="absolute top-0 left-0 w-48 h-48 bg-cyan-100/40 rounded-full blur-3xl pointer-events-none" />
+          <div className="space-y-4 relative z-10">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-800 text-xs font-bold">
+              <Sparkles className="w-3.5 h-3.5 text-cyan-600" />
+              <span>رؤيتي الفكرية</span>
             </div>
 
-            <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between">
-              <span className="text-xs font-bold text-slate-500">اليوزر الموحد:</span>
-              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-50 border border-slate-200">
-                <span className="font-mono text-xs font-bold text-slate-900 dir-ltr">
-                  @{username.replace(/^@/, '')}
-                </span>
-                <button
-                  type="button"
-                  onClick={handleCopyUsername}
-                  title="نسخ اسم المستخدم"
-                  className="p-1 rounded text-slate-400 hover:text-slate-900 transition-colors cursor-pointer"
-                >
-                  {copiedUser ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
-                </button>
-              </div>
-            </div>
+            <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+              {data.global_settings.philosophyTitle || 'فلسفة "الحركة هي عالمي"'}
+            </h3>
+
+            <p className="text-slate-700 text-base sm:text-lg leading-relaxed font-normal whitespace-pre-line">
+              {data.global_settings.philosophyDescription ||
+                'الحركة ليست مجرد انتقال من نقطة لأخرى، بل هي الإيقاع الذي يحرك القصة في الفيديو، والسرعة التي تحل خوارزميات التحدي، والتفاعل الإنساني الحي الذي يجعل التجارب الرقمية تنبض بالحياة.'}
+            </p>
           </div>
 
-          {/* Philosophy Box */}
-          <div className="lg:col-span-7 bg-white rounded-3xl border-2 border-cyan-200/80 p-7 sm:p-9 flex flex-col justify-between shadow-[0_8px_30px_rgba(0,217,254,0.08)] relative overflow-hidden group">
-            <div className="absolute top-0 left-0 w-32 h-32 bg-cyan-100/40 rounded-full blur-2xl pointer-events-none" />
-            <div className="space-y-4 relative z-10">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-800 text-xs font-bold">
-                <Sparkles className="w-3.5 h-3.5 text-cyan-600" />
-                <span>رؤيتي الفكرية</span>
-              </div>
-
-              <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
-                {data.global_settings.philosophyTitle || 'فلسفة "الحركة هي عالمي"'}
-              </h3>
-
-              <p className="text-slate-700 text-base sm:text-lg leading-relaxed font-normal whitespace-pre-line">
-                {data.global_settings.philosophyDescription ||
-                  'الحركة ليست مجرد انتقال من نقطة لأخرى، بل هي الإيقاع الذي يحرك القصة في الفيديو، والسرعة التي تحل خوارزميات التحدي، والتفاعل الإنساني الحي الذي يجعل التجارب الرقمية تنبض بالحياة.'}
-              </p>
-            </div>
-
-            <div className="mt-8 pt-5 border-t border-cyan-100 flex items-center justify-between text-xs text-slate-500 font-semibold relative z-10">
-              <span>الإيقاع • السرعة • التأثير</span>
-              <span className="font-mono text-cyan-700 font-bold">Movement is My World</span>
-            </div>
+          <div className="mt-8 pt-5 border-t border-cyan-100 flex items-center justify-between text-xs text-slate-500 font-semibold relative z-10">
+            <span>الإيقاع • السرعة • التأثير</span>
+            <span className="font-mono text-cyan-700 font-bold">Movement is My World</span>
           </div>
         </div>
 
