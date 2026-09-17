@@ -34,17 +34,17 @@ export const PortfolioPage: React.FC = () => {
   return (
     <div
       id="portfolio-page-container"
-      className="min-h-screen bg-[#f6f6e9] space-y-16 py-8 md:py-14 max-w-6xl mx-auto px-4"
+      className="min-h-screen bg-slate-50 text-slate-900 space-y-16 py-8 md:py-14 max-w-6xl mx-auto px-4 selection:bg-[#00d9fe] selection:text-slate-950"
       dir="rtl"
     >
       {/* Page Header */}
       <div className="text-center max-w-2xl mx-auto space-y-3">
-        <h1 className="text-3xl sm:text-5xl font-black text-[#0F172A] tracking-tight">
+        <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
           معرض الأعمال
         </h1>
-        {/* Accent Yellow Short Line #F59E0B */}
-        <div className="w-12 h-1 bg-[#F59E0B] rounded-full mx-auto" />
-        <p className="text-base sm:text-lg text-[#64748B] font-medium pt-1">
+        {/* Accent Electric Cyan Short Line */}
+        <div className="w-12 h-1 bg-[#00d9fe] rounded-full mx-auto" />
+        <p className="text-base sm:text-lg text-slate-600 font-medium pt-1">
           الأعمال تتحدث بصوت أعلى من الكلمات.
         </p>
       </div>

@@ -11,7 +11,7 @@ export const GlobalSettingsTab: React.FC = () => {
 
   const [formData, setFormData] = useState({
     displayName: data.global_settings.displayName || 'أحمد سامح',
-    username: data.global_settings.username || 'aahmd_saiimd',
+    username: data.global_settings.username || 'aahmd_saamh',
     tagline: data.global_settings.tagline || 'اليوزر النيم الموحد في كل منصات الكوكب',
     heroImage: data.global_settings.heroImage || '',
     bio: data.global_settings.bio || '',
@@ -55,7 +55,7 @@ export const GlobalSettingsTab: React.FC = () => {
     setErrors({});
     updateGlobalSettings({
       displayName: formData.displayName.trim() || 'أحمد سامح',
-      username: formData.username.trim().replace(/^@/, '') || 'aahmd_saiimd',
+      username: formData.username.trim().replace(/^@/, '') || 'aahmd_saamh',
       tagline: formData.tagline.trim(),
       heroImage: formData.heroImage,
       bio: formData.bio,
@@ -117,7 +117,7 @@ export const GlobalSettingsTab: React.FC = () => {
                 dir="ltr"
                 value={formData.username}
                 onChange={(e) => setFormData({ ...formData, username: e.target.value })}
-                placeholder="aahmd_saiimd"
+                placeholder="aahmd_saamh"
                 className="w-full p-3.5 pr-8 bg-slate-50 border border-slate-200 focus:border-[#00d9fe] focus:bg-white rounded-xl text-slate-900 text-sm font-bold font-mono focus:outline-hidden transition-all shadow-2xs text-right"
               />
             </div>

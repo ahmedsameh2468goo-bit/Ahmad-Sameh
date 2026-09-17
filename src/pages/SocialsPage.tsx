@@ -25,7 +25,7 @@ export const SocialsPage: React.FC = () => {
   const [copied, setCopied] = useState(false);
 
   const displayName = data.global_settings.displayName || 'أحمد سامح';
-  const username = data.global_settings.username || 'aahmd_saiimd';
+  const username = data.global_settings.username || 'aahmd_saamh';
   const tagline = data.global_settings.tagline || 'اليوزر النيم الموحد في كل منصات الكوكب';
   const socials = data.social_links;
 
@@ -33,7 +33,7 @@ export const SocialsPage: React.FC = () => {
     const handle = `@${username.replace(/^@/, '')}`;
     navigator.clipboard.writeText(handle);
     setCopied(true);
-    toast.success(`تم نسخ اليوزر الموحد: ${handle}`);
+    toast.success(`تم نسخ اسم المستخدم: ${handle}`);
     setTimeout(() => setCopied(false), 2000);
   };
 
@@ -138,21 +138,21 @@ export const SocialsPage: React.FC = () => {
   return (
     <div
       id="socials-page-container"
-      className="min-h-screen bg-[#f6f6e9] text-slate-900 py-10 md:py-16 max-w-6xl mx-auto px-4 space-y-12 selection:bg-[#00d9fe] selection:text-slate-900"
+      className="min-h-screen bg-slate-50 text-slate-900 py-10 md:py-16 max-w-6xl mx-auto px-4 space-y-12 selection:bg-[#00d9fe] selection:text-slate-950"
       dir="rtl"
     >
       {/* 1. HEADER & BRANDING SECTION */}
       <div className="text-center max-w-2xl mx-auto space-y-4">
-        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-[#00d9fe]/50 shadow-[0_2px_12px_rgba(0,217,254,0.18)]">
-          <Sparkles className="w-4 h-4 text-[#00d9fe]" />
-          <span className="text-xs sm:text-sm font-bold text-slate-800">التواجد الرقمي الموحد</span>
+        <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-cyan-200 shadow-xs">
+          <Sparkles className="w-4 h-4 text-cyan-600" />
+          <span className="text-xs sm:text-sm font-bold text-slate-700">التواجد الرقمي الموحد</span>
         </div>
 
         <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
           حساباتي الرسمية
         </h1>
 
-        <div className="w-14 h-1.5 bg-gradient-to-r from-[#00d9fe] via-blue-500 to-[#00d9fe] rounded-full mx-auto" />
+        <div className="w-14 h-1.5 bg-[#00d9fe] rounded-full mx-auto" />
 
         {/* Unified Username & Tagline Banner */}
         <div className="pt-2 flex flex-col items-center gap-2">
@@ -160,19 +160,19 @@ export const SocialsPage: React.FC = () => {
             type="button"
             onClick={handleCopyUsername}
             title="اضغط لنسخ اليوزر الموحد"
-            className="group inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-[#00d9fe]/60 shadow-[0_2px_14px_rgba(0,217,254,0.2)] hover:shadow-[0_4px_22px_rgba(0,217,254,0.4)] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
+            className="group inline-flex items-center gap-2 px-5 py-2 rounded-full bg-white border border-slate-200 shadow-xs hover:border-[#00d9fe] hover:scale-105 active:scale-95 transition-all duration-300 cursor-pointer"
           >
             <div className="w-2 h-2 rounded-full bg-[#00d9fe] shadow-[0_0_8px_#00d9fe]" />
             <span className="font-mono text-sm sm:text-base font-bold text-slate-900 tracking-wider dir-ltr">
               @{username.replace(/^@/, '')}
             </span>
-            <div className="p-1 rounded-full text-slate-400 group-hover:text-[#00d9fe] transition-colors">
-              {copied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Copy className="w-3.5 h-3.5" />}
+            <div className="p-1 rounded-full text-slate-400 group-hover:text-cyan-600 transition-colors">
+              {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
             </div>
           </button>
 
           {tagline && tagline.trim() !== '' && (
-            <p className="text-sm font-semibold text-slate-600 bg-white/70 px-4 py-1 rounded-full border border-slate-200/60 shadow-2xs">
+            <p className="text-sm font-semibold text-slate-600 bg-white px-4 py-1 rounded-full border border-slate-200 shadow-2xs">
               {tagline}
             </p>
           )}

@@ -164,6 +164,7 @@ export interface VideoPlatformDetection {
   watchLabel: string;
   videoId?: string;
   thumbnailUrl?: string;
+  embedUrl?: string;
 }
 
 /**
@@ -197,6 +198,7 @@ export const detectVideoPlatform = (url?: string): VideoPlatformDetection => {
       thumbnailUrl: videoId
         ? `https://img.youtube.com/vi/${videoId}/hqdefault.jpg`
         : undefined,
+      embedUrl: videoId ? `https://www.youtube.com/embed/${videoId}?autoplay=1` : undefined,
     };
   }
 

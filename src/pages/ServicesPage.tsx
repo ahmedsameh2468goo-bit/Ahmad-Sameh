@@ -47,17 +47,17 @@ export const ServicesPage: React.FC = () => {
   return (
     <div
       id="services-page-container"
-      className="min-h-screen bg-white text-slate-900 py-12 md:py-16 max-w-6xl mx-auto px-4 space-y-20"
+      className="min-h-screen bg-slate-50 text-slate-900 py-12 md:py-16 max-w-6xl mx-auto px-4 space-y-16 selection:bg-[#00d9fe] selection:text-slate-950"
       dir="rtl"
     >
       {/* 1. SERVICES HEADER */}
       <div className="text-center max-w-2xl mx-auto space-y-3">
-        <h1 className="text-3xl sm:text-5xl font-black text-[#0F172A] tracking-tight">
+        <h1 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
           الخدمات
         </h1>
-        {/* Accent Yellow Short Line #F59E0B */}
-        <div className="w-12 h-1 bg-[#F59E0B] rounded-full mx-auto" />
-        <p className="text-base sm:text-lg text-[#64748B] font-medium pt-1">
+        {/* Accent Electric Cyan Short Line */}
+        <div className="w-12 h-1 bg-[#00d9fe] rounded-full mx-auto" />
+        <p className="text-base sm:text-lg text-slate-600 font-medium pt-1">
           كل ما أقدمه من خدمات بجودة واحترافية
         </p>
       </div>
@@ -86,7 +86,7 @@ export const ServicesPage: React.FC = () => {
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.08 }}
-                  className="bg-white p-6 rounded-2xl border border-slate-100 shadow-xs hover:shadow-md hover:border-blue-100 transition-all flex flex-col justify-between group"
+                  className="bg-white p-6 rounded-2xl border border-slate-200 shadow-xs hover:shadow-[0_8px_25px_rgba(0,217,254,0.18)] hover:border-[#00d9fe] transition-all flex flex-col justify-between group"
                 >
                   <div>
                     {/* Light Blue Icon Box #EFF6FF with #2563EB Icon */}

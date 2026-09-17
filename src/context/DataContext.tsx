@@ -32,7 +32,7 @@ export const normalizePortfolioItems = (items: any[]): PortfolioProject[] => {
 export const INITIAL_DATA: AppDataState = {
   global_settings: {
     displayName: 'أحمد سامح',
-    username: 'aahmd_saiimd',
+    username: 'aahmd_saamh',
     tagline: 'اليوزر النيم الموحد في كل منصات الكوكب',
     heroImage: '/favicon.png',
     bio: 'صانع محتوى ومطور شغوف بالتقنية والذكاء الاصطناعي وصناعة التجارب الرقمية المميزة وتصميم الأفكار الإبداعية.',
@@ -110,11 +110,11 @@ export const INITIAL_DATA: AppDataState = {
   ],
   social_links: {
     whatsapp: '201000000000',
-    instagram: 'https://instagram.com/aahmd_saiimd',
-    youtube: 'https://youtube.com/@aahmd_saiimd',
-    tiktok: 'https://tiktok.com/@aahmd_saiimd',
-    x: 'https://x.com/aahmd_saiimd',
-    threads: 'https://threads.net/@aahmd_saiimd',
+    instagram: 'https://instagram.com/aahmd_saamh',
+    youtube: 'https://youtube.com/@aahmd_saamh',
+    tiktok: 'https://tiktok.com/@aahmd_saamh',
+    x: 'https://x.com/aahmd_saamh',
+    threads: 'https://threads.net/@aahmd_saamh',
     kick: '',
     linkedin: '',
     blogger: '',
