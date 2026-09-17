@@ -150,12 +150,25 @@ export const GlobalSettingsTab: React.FC = () => {
         </div>
 
         {/* 2. Direct Image Uploader */}
-        <div className="pb-6 border-b border-slate-100">
+        <div className="pb-6 border-b border-slate-100 space-y-3">
           <ImageUploader
             currentImage={formData.heroImage}
             onImageUploaded={handleImageUploaded}
             onImageRemoved={handleImageRemoved}
           />
+          <div className="space-y-1 pt-1">
+            <label className="text-xs font-bold text-slate-500 block">
+              أو أدخل رابط صورة مباشر (URL):
+            </label>
+            <input
+              type="url"
+              dir="ltr"
+              value={formData.heroImage}
+              onChange={(e) => setFormData((prev) => ({ ...prev, heroImage: e.target.value }))}
+              placeholder="https://images.unsplash.com/... أو رابط صورتك الشخصية"
+              className="w-full p-3 bg-slate-50 border border-slate-200 focus:border-[#00d9fe] focus:bg-white rounded-xl text-slate-900 text-xs focus:outline-hidden transition-all text-right"
+            />
+          </div>
         </div>
 
         {/* 3. Main Bio */}

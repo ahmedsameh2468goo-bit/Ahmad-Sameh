@@ -34,7 +34,7 @@ export const Header: React.FC = () => {
     { name: 'الخدمات', targetId: 'services', icon: Layers },
     { name: 'معرض الأعمال', targetId: 'portfolio', icon: Film },
     { name: 'حساباتي', targetId: 'socials', icon: Share2 },
-    { name: 'عني وتواصل', targetId: 'about', icon: User },
+    { name: 'عني أكثر', targetId: 'about', icon: User },
   ];
 
   // Active section observer on scroll

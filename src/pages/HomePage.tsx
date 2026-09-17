@@ -102,15 +102,6 @@ export const HomePage: React.FC = () => {
 
   const allSupportedPlatforms = [
     {
-      id: 'whatsapp',
-      name: 'واتساب',
-      englishName: 'WhatsApp',
-      url: getWhatsAppLink(socials.whatsapp),
-      icon: MessageCircle,
-      accentBorder: 'hover:border-[#25D366]',
-      iconBg: 'bg-[#25D366]/10 text-[#25D366]',
-    },
-    {
       id: 'instagram',
       name: 'إنستغرام',
       englishName: 'Instagram',
@@ -156,15 +147,6 @@ export const HomePage: React.FC = () => {
       iconBg: 'bg-slate-100 text-slate-800',
     },
     {
-      id: 'kick',
-      name: 'كيك',
-      englishName: 'Kick',
-      url: socials.kick || '',
-      icon: Tv,
-      accentBorder: 'hover:border-emerald-500',
-      iconBg: 'bg-emerald-50 text-emerald-600',
-    },
-    {
       id: 'linkedin',
       name: 'لينكد إن',
       englishName: 'LinkedIn',
@@ -172,6 +154,15 @@ export const HomePage: React.FC = () => {
       icon: Linkedin,
       accentBorder: 'hover:border-[#0A66C2]',
       iconBg: 'bg-blue-50 text-[#0A66C2]',
+    },
+    {
+      id: 'kick',
+      name: 'كيك',
+      englishName: 'Kick',
+      url: socials.kick || '',
+      icon: Tv,
+      accentBorder: 'hover:border-[#53FC18]',
+      iconBg: 'bg-emerald-50 text-[#00b01b]',
     },
   ];
 
@@ -469,7 +460,14 @@ export const HomePage: React.FC = () => {
                 >
                   {/* Media / Video Banner */}
                   <div className="relative aspect-video bg-slate-900 overflow-hidden flex items-center justify-center border-b border-slate-100">
-                    {detected.thumbnailUrl ? (
+                    {project.coverImage ? (
+                      <img
+                        src={project.coverImage}
+                        alt={project.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                        referrerPolicy="no-referrer"
+                      />
+                    ) : detected.thumbnailUrl ? (
                       <img
                         src={detected.thumbnailUrl}
                         alt={project.title}
@@ -685,155 +683,200 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* ========================================================================= */}
-      {/* 5. ABOUT & CONTACT SECTION (#about)                                       */}
+      {/* 5. ABOUT SECTION (#about)                                                 */}
       {/* ========================================================================= */}
       <section
         id="about"
-        className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20"
+        className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20 space-y-12"
       >
-        <div className="text-center max-w-2xl mx-auto space-y-3.5 mb-14">
+        {/* Section Header */}
+        <div className="text-center max-w-2xl mx-auto space-y-3.5">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-white border border-cyan-200 text-cyan-700 text-xs font-bold shadow-xs">
             <User className="w-3.5 h-3.5 text-cyan-600" />
-            <span>الهوية، الرؤية والتواصل المباشر</span>
+            <span>الهوية والرؤية الإبداعية</span>
           </div>
           <h2 className="text-3xl sm:text-5xl font-black text-slate-900 tracking-tight">
-            عني أكثر وتواصل معي
+            {data.global_settings.aboutTitle || 'عني أكثر'}
           </h2>
           <div className="w-14 h-1 bg-[#00d9fe] rounded-full mx-auto" />
           <p className="text-slate-600 text-base sm:text-lg">
-            أفكار تحرك العالم، وتواصل مباشر لبدء مشاريع رقمية وإبداعية استثنائية.
+            {data.global_settings.aboutSubtitle || 'رؤيتي، فلسفتي في العمل، والمشاريع والتجارب التي أعمل عليها'}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
-          {/* About Me Story Card (7 Cols) */}
-          <div className="lg:col-span-7 bg-white rounded-3xl border border-slate-200 p-8 sm:p-10 flex flex-col justify-between space-y-8 shadow-xs">
-            <div className="space-y-6">
-              <div className="space-y-2">
-                <h3 className="text-2xl sm:text-3xl font-black text-slate-900">
-                  من هو {displayName}؟
-                </h3>
-                <p className="text-sm font-mono text-cyan-700 font-bold dir-ltr text-right">
-                  @{username.replace(/^@/, '')} • Motion & Tech Creator
-                </p>
+        {/* 1. Philosophy Box & Identity */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-stretch">
+          {/* Main Identity & Bio */}
+          <div className="lg:col-span-5 bg-white rounded-3xl border border-slate-200/90 p-7 sm:p-8 flex flex-col justify-between shadow-xs">
+            <div className="space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 rounded-2xl bg-cyan-50 border border-cyan-100 flex items-center justify-center text-cyan-600">
+                  <User className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-xl sm:text-2xl font-black text-slate-900">{displayName}</h3>
+                  <p className="text-xs font-mono font-bold text-cyan-700 dir-ltr text-right">
+                    @{username.replace(/^@/, '')}
+                  </p>
+                </div>
               </div>
 
-              <p className="text-slate-600 text-base leading-relaxed font-normal">
+              {data.global_settings.jobTitle && (
+                <div className="inline-block px-3 py-1 rounded-full bg-slate-100 text-xs font-bold text-slate-700 border border-slate-200">
+                  {data.global_settings.jobTitle}
+                </div>
+              )}
+
+              <p className="text-slate-600 text-sm sm:text-base leading-relaxed font-normal">
                 {bio}
               </p>
+            </div>
 
-              <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
-                <h4 className="text-sm font-bold text-slate-900 flex items-center gap-2">
-                  <Sparkles className="w-4 h-4 text-cyan-600" />
-                  <span>فلسفة &quot;الحركة هي عالمي&quot;:</span>
-                </h4>
-                <p className="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
-                  الحركة ليست مجرد انتقال من نقطة لأخرى، بل هي الإيقاع الذي يحرك القصة في الفيديو، والسرعة التي تحل خوارزميات التحدي، والتفاعل الإنساني الحي الذي يجعل التجارب الرقمية تنبض بالحياة.
-                </p>
-              </div>
-
-              {/* Interests Pill Cloud */}
-              <div className="space-y-3">
-                <span className="text-xs font-bold text-slate-500 block">مجالات الشغف والاهتمام:</span>
-                <div className="flex flex-wrap gap-2">
-                  {(data.interests && data.interests.length > 0
-                    ? data.interests
-                    : [
-                        { id: '1', title: 'مونتاج الفيديوهات السينمائية' },
-                        { id: '2', title: 'مكعب الروبيك السريع' },
-                        { id: '3', title: 'Vibe Coding' },
-                        { id: '4', title: 'الذكاء الاصطناعي' },
-                        { id: '5', title: 'تصميم الهوية البصرية' },
-                        { id: '6', title: 'الأنيميشن والتحريك' },
-                      ]
-                  ).map((item) => (
-                    <span
-                      key={item.id}
-                      className="px-3.5 py-1.5 rounded-full bg-slate-100 text-xs font-bold text-slate-700 border border-slate-200 hover:border-[#00d9fe] hover:bg-cyan-50 hover:text-cyan-900 transition-colors"
-                    >
-                      {item.title}
-                    </span>
-                  ))}
-                </div>
+            <div className="pt-6 mt-6 border-t border-slate-100 flex items-center justify-between">
+              <span className="text-xs font-bold text-slate-500">اليوزر الموحد:</span>
+              <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-50 border border-slate-200">
+                <span className="font-mono text-xs font-bold text-slate-900 dir-ltr">
+                  @{username.replace(/^@/, '')}
+                </span>
+                <button
+                  type="button"
+                  onClick={handleCopyUsername}
+                  title="نسخ اسم المستخدم"
+                  className="p-1 rounded text-slate-400 hover:text-slate-900 transition-colors cursor-pointer"
+                >
+                  {copiedUser ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                </button>
               </div>
             </div>
           </div>
 
-          {/* Contact Direct Cards (5 Cols) */}
-          <div className="lg:col-span-5 space-y-6 flex flex-col justify-between">
-            {/* WhatsApp Direct Card */}
-            {data.global_settings.whatsapp && (
-              <div className="bg-white rounded-3xl border border-slate-200 p-7 hover:border-emerald-500 hover:shadow-[0_8px_30px_rgba(37,211,102,0.15)] transition-all space-y-4 shadow-xs">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-emerald-50 border border-emerald-100 flex items-center justify-center text-[#25D366]">
-                    <MessageCircle className="w-6 h-6" />
-                  </div>
-                  <div>
-                    <h4 className="text-lg font-black text-slate-900">محادثة مباشرة عبر واتساب</h4>
-                    <span className="text-xs text-slate-500">رد سريع لمناقشة المشاريع والأعمال</span>
-                  </div>
-                </div>
-
-                <a
-                  href={generateWhatsAppUrl(
-                    data.global_settings.whatsapp,
-                    `مرحباً ${displayName}، أود التواصل معك لمناقشة مشروع جديد`
-                  )}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full inline-flex items-center justify-center gap-2 py-3.5 px-5 rounded-2xl bg-[#25D366] hover:bg-[#20bd5a] text-white font-black text-sm shadow-md hover:scale-[1.02] active:scale-[0.98] transition-all cursor-pointer"
-                >
-                  <Send className="w-4 h-4" />
-                  <span>بدء محادثة واتساب فورية</span>
-                </a>
-              </div>
-            )}
-
-            {/* Email Card */}
-            {data.global_settings.email && (
-              <div className="bg-white rounded-3xl border border-slate-200 p-7 hover:border-[#00d9fe] hover:shadow-[0_8px_30px_rgba(0,217,254,0.15)] transition-all space-y-4 shadow-xs">
-                <div className="flex items-center gap-3">
-                  <div className="w-12 h-12 rounded-2xl bg-cyan-50 border border-cyan-100 flex items-center justify-center text-cyan-600">
-                    <Mail className="w-6 h-6" />
-                  </div>
-                  <div className="overflow-hidden">
-                    <h4 className="text-lg font-black text-slate-900">البريد الإلكتروني</h4>
-                    <span className="text-xs text-slate-500 font-mono block truncate dir-ltr text-right">
-                      {data.global_settings.email}
-                    </span>
-                  </div>
-                </div>
-
-                <a
-                  href={`mailto:${data.global_settings.email}?subject=تواصل بخصوص مشروع مع ${displayName}`}
-                  className="w-full inline-flex items-center justify-center gap-2 py-3 px-5 rounded-2xl bg-slate-900 hover:bg-[#00d9fe] text-white hover:text-slate-950 font-black text-sm transition-all cursor-pointer"
-                >
-                  <Mail className="w-4 h-4" />
-                  <span>إرسال بريد إلكتروني</span>
-                </a>
-              </div>
-            )}
-
-            {/* Quick Copy Info Box */}
-            <div className="p-5 rounded-3xl bg-white border border-slate-200 flex items-center justify-between shadow-xs">
-              <div>
-                <span className="text-xs text-slate-500 block font-bold">اسم المستخدم الموحد:</span>
-                <span className="font-mono text-sm font-black text-slate-900 dir-ltr inline-block">
-                  @{username.replace(/^@/, '')}
-                </span>
+          {/* Philosophy Box */}
+          <div className="lg:col-span-7 bg-white rounded-3xl border-2 border-cyan-200/80 p-7 sm:p-9 flex flex-col justify-between shadow-[0_8px_30px_rgba(0,217,254,0.08)] relative overflow-hidden group">
+            <div className="absolute top-0 left-0 w-32 h-32 bg-cyan-100/40 rounded-full blur-2xl pointer-events-none" />
+            <div className="space-y-4 relative z-10">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-cyan-50 border border-cyan-200 text-cyan-800 text-xs font-bold">
+                <Sparkles className="w-3.5 h-3.5 text-cyan-600" />
+                <span>رؤيتي الفكرية</span>
               </div>
 
-              <button
-                type="button"
-                onClick={handleCopyUsername}
-                title="نسخ اسم المستخدم"
-                className="p-2 rounded-xl bg-slate-100 hover:bg-[#00d9fe] text-slate-700 hover:text-slate-950 transition-colors cursor-pointer inline-flex items-center justify-center"
-              >
-                {copiedUser ? <Check className="w-4 h-4 text-emerald-600" /> : <Copy className="w-4 h-4" />}
-              </button>
+              <h3 className="text-2xl sm:text-3xl font-black text-slate-900 tracking-tight">
+                {data.global_settings.philosophyTitle || 'فلسفة "الحركة هي عالمي"'}
+              </h3>
+
+              <p className="text-slate-700 text-base sm:text-lg leading-relaxed font-normal whitespace-pre-line">
+                {data.global_settings.philosophyDescription ||
+                  'الحركة ليست مجرد انتقال من نقطة لأخرى، بل هي الإيقاع الذي يحرك القصة في الفيديو، والسرعة التي تحل خوارزميات التحدي، والتفاعل الإنساني الحي الذي يجعل التجارب الرقمية تنبض بالحياة.'}
+              </p>
+            </div>
+
+            <div className="mt-8 pt-5 border-t border-cyan-100 flex items-center justify-between text-xs text-slate-500 font-semibold relative z-10">
+              <span>الإيقاع • السرعة • التأثير</span>
+              <span className="font-mono text-cyan-700 font-bold">Movement is My World</span>
             </div>
           </div>
         </div>
+
+        {/* 2. Passion / Interests Tags (Infinite Chips) */}
+        <div className="bg-white rounded-3xl border border-slate-200/90 p-7 sm:p-8 shadow-xs space-y-4">
+          <div className="flex items-center justify-between flex-wrap gap-2">
+            <h3 className="text-lg font-black text-slate-900 flex items-center gap-2">
+              <Sparkles className="w-4 h-4 text-cyan-600" />
+              <span>مجالات الشغف والاهتمام</span>
+            </h3>
+            <span className="text-xs font-bold text-slate-500">
+              {data.interests.length} اهتمامات ومجالات نشاط
+            </span>
+          </div>
+
+          <div className="flex flex-wrap gap-2.5 pt-2">
+            {(data.interests && data.interests.length > 0
+              ? data.interests
+              : [
+                  { id: '1', title: 'مونتاج الفيديوهات' },
+                  { id: '2', title: 'مكعب الروبيك' },
+                  { id: '3', title: 'Vibe Coding' },
+                  { id: '4', title: 'الذكاء الاصطناعي' },
+                ]
+            ).map((item) => (
+              <span
+                key={item.id}
+                className="px-4 py-2 rounded-2xl bg-slate-50 text-xs sm:text-sm font-bold text-slate-800 border border-slate-200 hover:border-[#00d9fe] hover:bg-cyan-50/50 hover:text-cyan-900 hover:scale-105 transition-all duration-200 cursor-default"
+              >
+                {item.title}
+              </span>
+            ))}
+          </div>
+        </div>
+
+        {/* 3. Current Projects Showcase (Infinite Cards) */}
+        {data.about_projects && data.about_projects.length > 0 && (
+          <div className="space-y-6">
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <div>
+                <h3 className="text-2xl font-black text-slate-900 flex items-center gap-2.5">
+                  <Briefcase className="w-6 h-6 text-cyan-600" />
+                  <span>مشاريع وتجارب أعمل عليها</span>
+                </h3>
+                <p className="text-xs sm:text-sm text-slate-500 mt-1">
+                  نظرة على ما يتم تطويره وبناؤه في الوقت الراهن
+                </p>
+              </div>
+            </div>
+
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {data.about_projects.map((proj) => {
+                const isOngoing = proj.status?.includes('جاري') || proj.status?.toLowerCase().includes('progress');
+                return (
+                  <div
+                    key={proj.id}
+                    className="bg-white rounded-3xl border border-slate-200 p-6 flex flex-col justify-between space-y-4 hover:border-[#00d9fe] hover:shadow-[0_8px_25px_rgba(0,217,254,0.12)] transition-all group shadow-xs"
+                  >
+                    <div className="space-y-3">
+                      <div className="flex items-center justify-between gap-2">
+                        <span
+                          className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold border ${
+                            isOngoing
+                              ? 'bg-cyan-50 text-cyan-800 border-cyan-200'
+                              : 'bg-emerald-50 text-emerald-800 border-emerald-200'
+                          }`}
+                        >
+                          <span
+                            className={`w-1.5 h-1.5 rounded-full ${
+                              isOngoing ? 'bg-cyan-600 animate-pulse' : 'bg-emerald-600'
+                            }`}
+                          />
+                          <span>{proj.status || 'مشروع'}</span>
+                        </span>
+                      </div>
+
+                      <h4 className="text-lg font-black text-slate-900 group-hover:text-cyan-700 transition-colors">
+                        {proj.title}
+                      </h4>
+
+                      <p className="text-sm text-slate-600 leading-relaxed font-normal">
+                        {proj.description}
+                      </p>
+                    </div>
+
+                    {proj.link && proj.link.trim().length > 0 && (
+                      <div className="pt-4 border-t border-slate-100">
+                        <a
+                          href={proj.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1.5 text-xs font-bold text-slate-900 hover:text-cyan-600 transition-colors group/link"
+                        >
+                          <span>عرض تفاصيل المشروع</span>
+                          <ExternalLink className="w-3.5 h-3.5 text-cyan-600 group-hover/link:translate-x-[-2px] transition-transform" />
+                        </a>
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
       </section>
 
       {/* Embedded Video Modal */}

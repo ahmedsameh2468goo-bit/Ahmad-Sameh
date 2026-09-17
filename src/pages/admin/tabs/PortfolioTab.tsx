@@ -14,10 +14,12 @@ import {
   Globe,
   Briefcase,
   Sparkles,
+  Image as ImageIcon,
 } from 'lucide-react';
 import { useData } from '../../../context/DataContext';
 import { useToast } from '../../../context/ToastContext';
 import { ConfirmModal } from '../../../components/ConfirmModal';
+import { ImageUploader } from '../../../components/ImageUploader';
 import {
   detectVideoPlatform,
   isValidUrl,
@@ -40,6 +42,7 @@ export const PortfolioTab: React.FC = () => {
   const [formData, setFormData] = useState({
     serviceType: '',
     title: '',
+    coverImage: '',
     description: '',
     videoUrl: '',
     externalUrl: '',
@@ -53,6 +56,7 @@ export const PortfolioTab: React.FC = () => {
     setFormData({
       serviceType: '',
       title: '',
+      coverImage: '',
       description: '',
       videoUrl: '',
       externalUrl: '',
@@ -67,6 +71,7 @@ export const PortfolioTab: React.FC = () => {
     setFormData({
       serviceType: project.serviceType || '',
       title: project.title || '',
+      coverImage: project.coverImage || '',
       description: project.description || '',
       videoUrl: project.videoUrl || project.youtubeUrl || '',
       externalUrl: project.externalUrl || '',
@@ -85,6 +90,7 @@ export const PortfolioTab: React.FC = () => {
 
     const trimmedServiceType = formData.serviceType.trim();
     const trimmedTitle = formData.title.trim();
+    const trimmedCoverImage = formData.coverImage.trim();
     const trimmedDescription = formData.description.trim();
     const trimmedVideoUrl = formData.videoUrl.trim();
     const trimmedExternalUrl = formData.externalUrl.trim();
@@ -115,6 +121,7 @@ export const PortfolioTab: React.FC = () => {
     const payload = {
       serviceType: trimmedServiceType || 'خدمة إبداعية',
       title: trimmedTitle,
+      coverImage: trimmedCoverImage,
       description: trimmedDescription,
       videoUrl: trimmedVideoUrl,
       youtubeUrl: trimmedVideoUrl, // for backward compatibility
@@ -190,7 +197,14 @@ export const PortfolioTab: React.FC = () => {
                 <div>
                   {/* Media Banner Preview */}
                   <div className="relative aspect-video bg-slate-900 flex items-center justify-center overflow-hidden">
-                    {detected.thumbnailUrl ? (
+                    {project.coverImage ? (
+                      <img
+                        src={project.coverImage}
+                        alt={project.title}
+                        className="w-full h-full object-cover"
+                        referrerPolicy="no-referrer"
+                      />
+                    ) : detected.thumbnailUrl ? (
                       <img
                         src={detected.thumbnailUrl}
                         alt={project.title}
@@ -373,6 +387,36 @@ export const PortfolioTab: React.FC = () => {
                   required
                   className="w-full p-3 bg-slate-50 border border-slate-200 focus:border-blue-500 focus:bg-white rounded-xl text-slate-900 text-sm focus:outline-hidden transition-all"
                 />
+              </div>
+
+              {/* Field 2.5: 16:9 Widescreen Header Image (صورة الغلاف العريضة 1920x1080) */}
+              <div className="space-y-2 p-4 bg-slate-50 rounded-2xl border border-slate-200">
+                <label className="text-xs font-bold text-slate-800 flex items-center gap-2">
+                  <ImageIcon className="w-4 h-4 text-cyan-600" />
+                  <span>صورة الغلاف العريضة 16:9 (1920x1080 Header Image)</span>
+                </label>
+
+                <ImageUploader
+                  currentImage={formData.coverImage}
+                  onImageUploaded={(b64) => setFormData((prev) => ({ ...prev, coverImage: b64 }))}
+                  onImageRemoved={() => setFormData((prev) => ({ ...prev, coverImage: '' }))}
+                  label="رفع صورة غلاف للمشروع بدقة عريضة 16:9"
+                  helperText="اسحب وأفلت صورة الغلاف أو اختر ملفاً من جهازك (نسبة العرض 16:9)"
+                />
+
+                <div className="space-y-1 pt-1">
+                  <label className="text-[11px] font-bold text-slate-500 block">
+                    أو يمكنك كتابة رابط صورة مباشر (URL):
+                  </label>
+                  <input
+                    type="url"
+                    dir="ltr"
+                    value={formData.coverImage}
+                    onChange={(e) => setFormData({ ...formData, coverImage: e.target.value })}
+                    placeholder="https://images.unsplash.com/... أو رابط الصورة"
+                    className="w-full p-2.5 bg-white border border-slate-200 focus:border-[#00d9fe] rounded-xl text-slate-900 text-xs focus:outline-hidden text-right"
+                  />
+                </div>
               </div>
 
               {/* Field 3: Project Description (نص توضيحي للمشروع) */}

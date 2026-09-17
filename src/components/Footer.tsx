@@ -80,7 +80,7 @@ export const Footer: React.FC = () => {
             onClick={() => scrollToSection('about')}
             className="hover:text-cyan-600 hover:scale-105 transition-all cursor-pointer"
           >
-            عني وتواصل
+            عني أكثر
           </button>
         </nav>
 

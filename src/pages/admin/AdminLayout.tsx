@@ -22,10 +22,9 @@ import { useData } from '../../context/DataContext';
 import { useToast } from '../../context/ToastContext';
 import { GlobalSettingsTab } from './tabs/GlobalSettingsTab';
 import { ServicesTab } from './tabs/ServicesTab';
-import { TopicsTab } from './tabs/TopicsTab';
 import { PortfolioTab } from './tabs/PortfolioTab';
 import { SocialsTab } from './tabs/SocialsTab';
-import { AboutProjectsTab } from './tabs/AboutProjectsTab';
+import { AboutTab } from './tabs/AboutTab';
 import { BackupTab } from './tabs/BackupTab';
 
 export const AdminLayout: React.FC = () => {
@@ -36,7 +35,7 @@ export const AdminLayout: React.FC = () => {
   const toast = useToast();
 
   const [activeTab, setActiveTab] = useState<
-    'settings' | 'services' | 'topics' | 'portfolio' | 'socials' | 'about_projects' | 'backup'
+    'settings' | 'services' | 'portfolio' | 'socials' | 'about' | 'backup'
   >('settings');
 
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -72,12 +71,11 @@ export const AdminLayout: React.FC = () => {
   };
 
   const navTabs = [
-    { id: 'settings', label: 'الإعدادات العامة', icon: Settings },
+    { id: 'settings', label: 'البيانات الأساسية', icon: Settings },
     { id: 'services', label: 'الخدمات', icon: Layers },
-    { id: 'topics', label: 'الموضوعات والاهتمامات', icon: Sparkles },
     { id: 'portfolio', label: 'معرض الأعمال', icon: Film },
-    { id: 'socials', label: 'حساباتي', icon: Share2 },
-    { id: 'about_projects', label: 'مشاريع عني أكثر', icon: FolderGit2 },
+    { id: 'socials', label: 'حساباتك الرسمية', icon: Share2 },
+    { id: 'about', label: 'عني أكثر', icon: Sparkles },
     { id: 'backup', label: 'النسخ الاحتياطي والبيانات', icon: Database },
   ] as const;
 
@@ -238,10 +236,9 @@ export const AdminLayout: React.FC = () => {
       <main className="flex-1 p-4 sm:p-8 lg:p-10 max-w-5xl mx-auto w-full">
         {activeTab === 'settings' && <GlobalSettingsTab />}
         {activeTab === 'services' && <ServicesTab />}
-        {activeTab === 'topics' && <TopicsTab />}
         {activeTab === 'portfolio' && <PortfolioTab />}
         {activeTab === 'socials' && <SocialsTab />}
-        {activeTab === 'about_projects' && <AboutProjectsTab />}
+        {activeTab === 'about' && <AboutTab />}
         {activeTab === 'backup' && <BackupTab />}
       </main>
     </div>
